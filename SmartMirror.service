@@ -1,0 +1,14 @@
+[Unit]
+Description=SmartMirror
+
+[Service]
+ExecStart=/home/pi/SmartMirrorFHV/bin/www
+Restart=always
+User=pi
+Group=pi
+Environment=PATH=/usr/bin:/usr/local/bin
+Environment=NODE_ENV=production
+WorkingDirectory=/home/pi/SmartMirrorFHV
+
+[Install]
+WantedBy=multi-user.target
