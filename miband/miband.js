@@ -1,3 +1,4 @@
+/*
 // Modules
 var noble = require('noble'); // https://github.com/sandeepmistry/noble/wiki/Getting-started
 
@@ -68,7 +69,7 @@ module.exports = new Promise(function (resolve, reject) {
                         }
                     });
 
-					/*deviceInformationService.discoverCharacteristics([BATTERY_INFO_UUID ], function(error, characteristics) {
+					/!*deviceInformationService.discoverCharacteristics([BATTERY_INFO_UUID ], function(error, characteristics) {
 						var batteryInfoCharacteristic = characteristics[0];
 						console.log('discovered battery characteristic');
 
@@ -78,10 +79,11 @@ module.exports = new Promise(function (resolve, reject) {
 							}
 							var batteryLevel = data[0];
 						});
-					});*/
+					});*!/
 
                 });
             });
         }
     });
 })
+*/
