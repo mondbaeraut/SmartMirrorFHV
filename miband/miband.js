@@ -9,7 +9,7 @@ var BATTERY_INFO_UUID = 'ff0c';
 
 // Promise
 module.exports = new Promise(function (resolve, reject) {
-    var data = {};
+    var data = {test:"data"};
 
     noble.on('stateChange', function (state) {
         if (state === 'poweredOn') {
@@ -62,8 +62,9 @@ module.exports = new Promise(function (resolve, reject) {
                                 console.log('Steps Counter: ' + steps);
                                 data.steps = steps;
 
-                                noble.stopScanning();
                                 resolve(data);
+
+                                noble.stopScanning();
                             });
                         }
                     });

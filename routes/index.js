@@ -4,13 +4,6 @@ var getMiBandData = require('../miband/miband');
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-
-	getMiBandData.then(function (response) {
-		console.log("Success!", response);
-	}, function (error) {
-		console.error("Failed!", error);
-	});
-
 	res.render('index', { title: 'Express' });
 });
 

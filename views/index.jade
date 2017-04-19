@@ -2,8 +2,11 @@ extends layout
 
 block content
   div(id="left")
-    h1= title
-    p Left Column
+    div(id="clock")
+    div(id="date")
+    script(src='/javascript/clock.js')
+    div(id="steps")
   div(id="right")
-    h1= title
-    p Right Column
+    p(style="font-size:1.4em;font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;letter-spacing: 0.1em") 'Lucida Sans Unicode', 'Lucida Grande', sans-serif - 1.4em
+    p(style="font-size:1.6em;font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;letter-spacing: 0.1em") 'Lucida Sans Unicode', 'Lucida Grande', sans-serif - 1.6em
+  script(src='/javascript/miband.js')
