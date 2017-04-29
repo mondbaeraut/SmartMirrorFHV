@@ -30,11 +30,7 @@ module.exports.updateDailySteps = function (bandUuid, steps) {
     return new Promise(function (resolve, reject) {
         var database = new sqlite.Database('./SmartMirror.db');
         database.serialize(function () {
-            database.all('update trackerSteps set steps = ' + steps + ' where trackerId = \'' + bandUuid + '\' and strftime(\'%Y%m%d\',date) = strftime(\'%Y%m%d\',\'now\')', function (error, rows) {
-                if (error) console.log(error);
-                console.log('Rows: ' + rows);
-                resolve(rows);
-            });
+            database.all('update trackerSteps set steps = ' + steps + ' where trackerId = \'' + bandUuid + '\' and strftime(\'%Y%m%d\',date) = strftime(\'%Y%m%d\',\'now\')');
             database.close();
         });
     })
@@ -44,11 +40,7 @@ module.exports.insertDailySteps = function (bandUuid, steps) {
     return new Promise(function (resolve, reject) {
         var database = new sqlite.Database('./SmartMirror.db');
         database.serialize(function () {
-            database.all('insert into trackerSteps (trackerId, steps, date) values(\'' + bandUuid + '\', ' + steps + ',date(\'now\'))', function (error, rows) {
-                if (error) console.log(error);
-                console.log('Rows: ' + rows);
-                resolve(rows);
-            });
+            database.all('insert into trackerSteps (trackerId, steps, date) values(\'' + bandUuid + '\', ' + steps + ',date(\'now\'))');
             database.close();
         });
     })
