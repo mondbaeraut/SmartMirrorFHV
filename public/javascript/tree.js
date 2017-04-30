@@ -11,9 +11,9 @@ container.addEventListener("click", function(e) {
     animation-duration: 8s;
 	animation-fill-mode: forwards;}`);
 });
-for(var i=0;i<17;i++){
+for(var i=0;i<16;i++){
 	var image = document.createElement("img");
-	//image.src = "/resources/leaf2.svg";
+	image.src = "/resources/leaf2.svg";
 	image.id = `leaf${i}`;
 	container.append(image);
 }

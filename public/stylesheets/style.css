@@ -37,3 +37,8 @@ a {
    margin-top: 15%;
    font-size: 4em;
 }
+
+#treeImage {
+	width:100%;
+	height:auto;
+}
