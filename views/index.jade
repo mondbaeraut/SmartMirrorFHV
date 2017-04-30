@@ -2,11 +2,21 @@ extends layout
 
 block content
   div(id="left")
-    div(id="clock")
-    div(id="date")
-    script(src='/javascript/clock.js')
-    div(id="steps")
+    div(id="lefttop")
+     div(id="circle_container_clock")
+        div(id="circle_main_clock")
+          div(id="circle_text_container_clock")
+            div(id="circle_text_clock")
+             div(id="clock")
+             div(id="date")
+              script(src='/javascript/clock.js')
+    div(id="topbottom")
+      div(id="circle_container_steps")
+        div(id="circle_main_steps")
+          div(id="circle_text_container_steps")
+          div(id="circle_text_steps")
+            div(id="steps")
   div(id="right")
-    p(style="font-size:1.4em;font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;letter-spacing: 0.1em") 'Lucida Sans Unicode', 'Lucida Grande', sans-serif - 1.4em
-    p(style="font-size:1.6em;font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;letter-spacing: 0.1em") 'Lucida Sans Unicode', 'Lucida Grande', sans-serif - 1.6em
+        img(src="/resources/svgTree.svg", id="tree")
+        script(src='/javascript/tree.js')
   script(src='/javascript/miband.js')
