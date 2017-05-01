@@ -1,5 +1,5 @@
 
-@keyframes example1 {
+@keyframes example {
     to {
 		transform: rotate(400deg);
 		top:98%;
@@ -12,177 +12,37 @@
 }
 
 #leaf0 { position: absolute;
-	left: 222px;
-	top: 36px; 
+	left: 80.1%;
+	top: 20%; 
 	width:11px; 
-	height:11px;
-	animation-name: example;
-    animation-duration: 8s;
-	animation-fill-mode: forwards;
-	transform: rotate(270deg);}
+	height:11px;}
 	
-#leaf0a{ position: absolute;
-	left: 222px;
-	top: 36px; 
-	width:11px; 
-	height:11px;
-	animation-name: example1;
-    animation-duration: 8s;
-	animation-fill-mode: forwards;
-	transform: rotate(270deg);}
-
 #leaf1 { position: absolute;
-	left: 233px;
-	top: 56px; 
+	left: 87.8125%;
+	top: 12.88888888888889%; 
 	width:11px; 
-	height:11px;
-	animation-name: example;
-    animation-duration: 8s;
-	animation-fill-mode: forwards;}
+	height:11px;}
 	
 #leaf2 { position: absolute;
-	left: 198px;
-	top: 81px; 
+	left: 91.5%;
+	top: 12%; 
 	width:11px; 
-	height:11px;
-	animation-name: example;
-    animation-duration: 8s;
-	animation-fill-mode: forwards;}
-	
+	height:11px;}
+
 #leaf3 { position: absolute;
-	left: 199px;
-	top: 21px; 
+	left: 90.4375%;
+	top: 20.333333333333332%; 
 	width:11px; 
-	height:11px;
-	animation-name: example;
-    animation-duration: 8s;
-	animation-fill-mode: forwards;}
+	height:11px;}
 
-
- #leaf4 { position: absolute;
-	left: 194px;
-	top: 27px; 
+#leaf4 { position: absolute;
+	left: 85.375%;
+	top: 21.88888888888889%; 
 	width:11px; 
-	height:11px;
-	animation-name: example;
-    animation-duration: 8s;
-	animation-fill-mode: forwards;}
-
-
- #leaf5 { position: absolute;
-	left: 194px;
-	top: 34px; 
-	width:11px; 
-	height:11px;
-	animation-name: example;
-    animation-duration: 8s;
-	animation-fill-mode: forwards;}
-
-
- #leaf6 { position: absolute;
-	left: 190px;
-	top: 40px; 
-	width:11px; 
-	height:11px;
-	animation-name: example;
-    animation-duration: 8s;
-	animation-fill-mode: forwards;}
-
-
- #leaf7 { position: absolute;
-	left: 189px;
-	top: 45px; 
-	width:11px; 
-	height:11px;
-	animation-name: example;
-    animation-duration: 8s;
-	animation-fill-mode: forwards;}
-
-
- #leaf8 { position: absolute;
-	left: 181px;
-	top: 45px; 
-	width:11px; 
-	height:11px;
-	animation-name: example;
-    animation-duration: 8s;
-	animation-fill-mode: forwards;}
-
-
- #leaf9 { position: absolute;
-	left: 180px;
-	top: 43px; 
-	width:11px; 
-	height:11px;
-	animation-name: example;
-    animation-duration: 8s;
-	animation-fill-mode: forwards;}
-
-
- #leaf10 { position: absolute;
-	left: 174px;
-	top: 41px; 
-	width:11px; 
-	height:11px;
-	animation-name: example;
-    animation-duration: 8s;
-	animation-fill-mode: forwards;}
-
-
- #leaf11 { position: absolute;
-	left: 177px;
-	top: 35px; 
-	width:11px; 
-	height:11px;
-	animation-name: example;
-    animation-duration: 8s;
-	animation-fill-mode: forwards;}
-
-
- #leaf12 { position: absolute;
-	left: 177px;
-	top: 30px; 
-	width:11px; 
-	height:11px;
-	animation-name: example;
-    animation-duration: 8s;
-	animation-fill-mode: forwards;}
-
-
- #leaf13 { position: absolute;
-	left: 170px;
-	top: 31px; 
-	width:11px; 
-	height:11px;
-	animation-name: example;
-    animation-duration: 8s;
-	animation-fill-mode: forwards;}
-
-
- #leaf14 { position: absolute;
-	left: 164px;
-	top: 22px; 
-	width:11px; 
-	height:11px;
-	animation-name: example;
-    animation-duration: 8s;
-	animation-fill-mode: forwards;}
-
-
- #leaf15 { position: absolute;
-	left: 151px;
-	top: 43px; 
-	width:11px; 
-	height:11px;
-	animation-name: example;
-    animation-duration: 8s;
-	animation-fill-mode: forwards;}
+	height:11px;}
 	
-#leaf16{ position: absolute;
-	left: 120px;
-	top: 191px; 
-	width:11px; 
-	height:11px;
+.leafFallAnimation {
 	animation-name: example;
     animation-duration: 8s;
-	animation-fill-mode: forwards;}
+	animation-fill-mode: forwards;
+}
