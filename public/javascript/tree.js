@@ -39,7 +39,7 @@ setInterval( function() {
 		resetLeaf("leaf"+i);
 	}
 	leafCounter = 0;
-}, 35000 );
+}, 500000 );
 
 function getNextLeaf() {
 	if(leafCounter == maxLeaves) {
