@@ -67,7 +67,7 @@ function readData() {
                         }
 
                         var deviceInformationService = services[0];
-                        console.log('discovered device information service');
+                        console.log('discovered device information service ' + services);
 
                         deviceInformationService.discoverCharacteristics([REALTIME_STEPS_UUID], function (error, characteristics) {
                             var realtimeStepsCharacteristic = characteristics[0];
