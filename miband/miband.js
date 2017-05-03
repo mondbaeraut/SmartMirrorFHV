@@ -35,19 +35,32 @@ function readData() {
     return new Promise(function (resolve, reject) {
         var data = {};
 
+        // start scanning when API is called
+        var serviceUUIDs = [SERVICE_UUID]; // default: [] => all
+        var allowDuplicates = false; // default: false
+        if (noble.state === 'poweredOn') {
+            noble.startScanning(serviceUUIDs, allowDuplicates);
+            console.log('start scanning for BLE devices with service id ' + SERVICE_UUID);
+        } else {
+            reject({error: 'Bluetooth is not turned on!'});
+        }
+
+        // stop scanning when bluetooth is powerded off
         noble.on('stateChange', function (state) {
-            if (state === 'poweredOn') {
-                noble.startScanning();
-            } else {
+            if (state === 'poweredOff') {
                 noble.stopScanning();
+                reject({error: 'Bluetooth is not turned on!'});
             }
         });
 
+        // when device is detected read data
         noble.on('discover', function (peripheral) {
+            noble.stopScanning(); // stop when peripheral found
             console.log('Found device with local name: ' + peripheral.advertisement.localName);
             console.log('advertising the following service uuid\'s: ' + peripheral.advertisement.serviceUuids);
             console.log();
 
+            // only read data from given device
             if (peripheral.advertisement.localName === DEVICE_NAME) {
                 console.log('device RSSI information: ' + peripheral.rssi + 'db');
                 data.rssi = peripheral.rssi;
@@ -96,7 +109,7 @@ function readData() {
                         /*deviceInformationService.discoverCharacteristics([BATTERY_INFO_UUID ], function(error, characteristics) {
                             var batteryInfoCharacteristic = characteristics[0];
                             console.log('discovered battery characteristic');
-    
+     
                             batteryInfoCharacteristic.read(function(error, data) {
                                 if(error){
                                     console.error(error);
@@ -107,6 +120,9 @@ function readData() {
 
                     });
                 });
+            } else { // otherwise start scanning again
+                noble.startScanning(serviceUUIDs, allowDuplicates);
+                console.log('start scanning for BLE devices with service id ' + SERVICE_UUID);
             }
         });
     })
