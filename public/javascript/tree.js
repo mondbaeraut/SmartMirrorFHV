@@ -1,6 +1,6 @@
 
 // Maximum number of leaves
-var maxLeaves = 5;
+var maxLeaves = 91;
 var leafCounter = 0;
 
 var container = document.getElementById("right");
@@ -12,10 +12,7 @@ container.addEventListener("click", function(e) {
 	left: ${(e.clientX-11)*100/1600}%;
 	top: ${(e.clientY-11)*100/900}%; 
 	width:11px; 
-	height:11px;
-	animation-name: example;
-    animation-duration: 8s;
-	animation-fill-mode: forwards;}`);
+	height:11px;}`);
 });
 
 // Create all leaf objects and "place" them on the tree
