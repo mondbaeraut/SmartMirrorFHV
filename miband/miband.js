@@ -1,5 +1,6 @@
 // Modules
 var noble = require('noble'); // https://github.com/sandeepmistry/noble/wiki/Getting-started
+var database = require('./database');
 
 // Constants
 var REALTIME_STEPS_UUID = 'ff06';
@@ -11,6 +12,8 @@ var BATTERY_INFO_UUID = 'ff0c';
 module.exports.getMiBandData = function () {
     return new Promise(function (resolve, reject) {
         readData().then(function (responseBand) {
+            console.log('MiBand data read ' +  responseBand.uuid);
+
             database.getDailyBandSteps(responseBand.uuid).then(function (responseDb) {
                 console.log(JSON.stringify(responseDb));
                 if (responseDb == '') {
@@ -33,8 +36,6 @@ module.exports.getMiBandData = function () {
 // load values via bluetooth
 function readData() {
     return new Promise(function (resolve, reject) {
-        var data = {};
-
         // start scanning when API is called
         var serviceUUIDs = [SERVICE_UUID]; // default: [] => all
         var allowDuplicates = false; // default: false
@@ -54,7 +55,7 @@ function readData() {
         });
 
         // when device is detected read data
-        noble.on('discover', function (peripheral) {
+        noble.once('discover', function (peripheral) {
             noble.stopScanning(); // stop when peripheral found
             console.log('Found device with local name: ' + peripheral.advertisement.localName);
             console.log('advertising the following service uuid\'s: ' + peripheral.advertisement.serviceUuids);
@@ -63,7 +64,6 @@ function readData() {
             // only read data from given device
             if (peripheral.advertisement.localName === DEVICE_NAME) {
                 console.log('device RSSI information: ' + peripheral.rssi + 'db');
-                data.rssi = peripheral.rssi;
                 peripheral.connect(function (error) {
                     if (error) {
                         noble.stopScanning();
@@ -71,13 +71,13 @@ function readData() {
                     }
 
                     console.log('connected to peripheral: ' + peripheral.uuid);
-                    data.uuid = peripheral.uuid;
 
                     peripheral.discoverServices([SERVICE_UUID], function (error, services) {
                         if (error) {
                             noble.stopScanning();
                             reject(error);
                         }
+
 
                         var deviceInformationService = services[0];
                         console.log('discovered device information service ' + services);
@@ -95,13 +95,16 @@ function readData() {
                                         reject(error);
                                     }
 
+                                    peripheral.disconnect();
+
                                     var steps = (data[3] << 24) | (data[2] << 16) | (data[1] << 8) | data[0];
                                     console.log('Steps Counter: ' + steps);
-                                    data.steps = steps;
+                                    
+                                    var data = {uuid: peripheral.uuid, rssi: peripheral.rssi, steps: steps};
+
+                                    console.log(data);
 
                                     resolve(data);
-
-                                    noble.stopScanning();
                                 });
                             }
                         });

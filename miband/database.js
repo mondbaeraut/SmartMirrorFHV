@@ -14,6 +14,7 @@ module.exports.initializeDatabase = function () {
 
 module.exports.getDailyBandSteps = function (bandUuid) {
     return new Promise(function (resolve, reject) {
+        console.log('get daily steps from database for uuid ' + bandUuid);
         var database = new sqlite.Database('./SmartMirror.db');
         database.serialize(function () {
             database.all('select * from trackerSteps where trackerId = \'' + bandUuid + '\' and strftime(\'%Y%m%d\',date) = strftime(\'%Y%m%d\',\'now\')', function (error, rows) {
