@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tree</title>
+    <style>
+        #container {
+            background: url(emptyTree.svg);
+            background-size: contain;
+            width: 731px;
+            height: 929px;
+            position: relative;
+            margin-top: 50px;
+            margin-left: 10px;
+        }
+
+        .leaf {
+            background: url(leaf.svg);
+            background-size: contain;
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+<div id="container">
+    <div class="leaf" data-width="49" data-height="71" data-top="0.53" data-left="32.01" data-rotate="300"></div>
+</div>
+<script>
+    let leaves = document.querySelectorAll(".leaf");
+    leaves.forEach(leaf => {
+        leaf.style.width = `${leaf.getAttribute("data-width")}px`;
+        leaf.style.height = `${leaf.getAttribute("data-height")}px`;
+        leaf.style.top = `${leaf.getAttribute("data-top")}%`;
+        leaf.style.left = `${leaf.getAttribute("data-left")}%`;
+        leaf.style.transform = `rotate(${leaf.getAttribute("data-rotate")}deg)`;
+    });
+
+    let xStart, yStart;
+
+    document.getElementById("container").addEventListener("mousedown", e => {
+        xStart = e.clientX;
+        yStart = e.clientY;
+    });
+
+    document.getElementById("container").addEventListener("mouseup", e => {
+        let rotation = angle(xStart, yStart, e.clientX, e.clientY);
+        console.log(rotation);
+    });
+
+    function angle(x1, y1, x2, y2) {
+        let angle =  Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI - 270;
+        return angle < 0 ? 360 + angle : angle;
+    }
+</script>
+</body>
+</html>
