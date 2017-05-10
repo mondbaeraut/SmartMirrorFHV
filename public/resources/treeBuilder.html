@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tree</title>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
+        #container {
+            margin: 50px;
+            border: 1px solid black;
+            width: 80%;
+            height: 80%;
+            position: relative;
+        }
+
+        #overlay {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            z-index: 1;
+        }
+
+        #tree {
+            height: 100%;
+            position: absolute;
+            right: 0;
+        }
+
+        .leaf {
+            position: absolute;
+            transform-origin: bottom left;
+        }
+    </style>
+</head>
+<body>
+<div id="container">
+    <div id="overlay"></div>
+    <img src="emptyTree.svg" id="tree" />
+</div>
+<script>
+    /*
+     * TODO:
+     * save leaf parameter (position, angle and diagLength) to array and initialize tree from there
+     */
+    const leafWidth = 49;
+    const leafHeight = 71;
+    const leafDiagonalAngle = diagonalAngle(leafWidth, leafHeight);
+
+    let overlay = document.getElementById("overlay");
+
+    let start;
+    let isDown;
+    let leaf;
+
+    overlay.addEventListener("mousedown", e => {
+        isDown = true;
+        start = {
+            x: e.offsetX,
+            y: e.offsetY
+        };
+        leaf = new Image();
+        leaf.src = "leaf.svg";
+        leaf.classList.add("leaf");
+        leaf.style.width = 0;
+        leaf.style.height = 0;
+        document.getElementById("container").appendChild(leaf);
+    });
+
+    overlay.addEventListener("mousemove", e=> {
+        if (isDown) {
+            let current = {
+                x: e.offsetX,
+                y: e.offsetY
+            };
+
+            let alpha = angle(start.x, start.y, current.x, current.y);
+            let rotation = alpha - leafDiagonalAngle;
+            let hypothenuse = distance(start.x, start.y, current.x, current.y);
+            let width = Math.sin(leafDiagonalAngle / 180 * Math.PI) * hypothenuse;
+            let height = Math.cos(leafDiagonalAngle / 180 * Math.PI) * hypothenuse;
+
+            leaf.style.left = start.x + "px";
+            leaf.style.top = start.y - height + "px";
+
+            leaf.style.transform = "rotate(" + rotation + "deg)";
+            leaf.style.width = width + "px";
+            leaf.style.height = height + "px";
+        }
+    });
+
+    overlay.addEventListener("mouseup", e => {
+        isDown = false;
+    });
+
+    function distance(x1, y1, x2, y2) {
+        let a = x1 - x2;
+        let b = y1 - y2;
+        return Math.sqrt(a * a + b * b);
+    }
+
+    function diagonalAngle(width, height) {
+        return Math.atan(width / height) * 180 / Math.PI;
+    }
+
+    function angle(x1, y1, x2, y2) {
+        let angle =  Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI - 270;
+        return angle < 0 ? 360 + angle : angle;
+    }
+</script>
+</body>
+</html>
