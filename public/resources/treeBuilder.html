@@ -39,77 +39,159 @@
 <body>
 <div id="container">
     <div id="overlay"></div>
-    <img src="emptyTree.svg" id="tree" />
+    <img src="emptyTree.svg" id="tree"/>
 </div>
 <script>
-    /*
-     * TODO:
-     * save leaf parameter (position, angle and diagLength) to array and initialize tree from there
-     */
-    const leafWidth = 49;
-    const leafHeight = 71;
-    const leafDiagonalAngle = diagonalAngle(leafWidth, leafHeight);
+    class TrigUtil {
+        static adjacentLeg(angle, hypotenuse) {
+            return Math.cos(TrigUtil.degToRad(angle)) * hypotenuse;
+        }
 
-    let overlay = document.getElementById("overlay");
+        static oppositeLeg(angle, hypotenuse) {
+            return Math.sin(TrigUtil.degToRad(angle)) * hypotenuse;
+        }
 
-    let start;
-    let isDown;
-    let leaf;
+        static distance(pointA, pointB) {
+            let a = pointA.x - pointB.x;
+            let b = pointA.y - pointB.y;
+            return Math.sqrt(a * a + b * b);
+        }
 
-    overlay.addEventListener("mousedown", e => {
-        isDown = true;
-        start = {
-            x: e.offsetX,
-            y: e.offsetY
-        };
-        leaf = new Image();
-        leaf.src = "leaf.svg";
-        leaf.classList.add("leaf");
-        leaf.style.width = 0;
-        leaf.style.height = 0;
-        document.getElementById("container").appendChild(leaf);
-    });
+        static diagonalAngle(width, height) {
+            return TrigUtil.radToDeg(Math.atan(width / height));
+        }
 
-    overlay.addEventListener("mousemove", e=> {
-        if (isDown) {
-            let current = {
+        static angle(pointA, pointB) {
+            let angle = TrigUtil.radToDeg(Math.atan2(pointB.y - pointA.y, pointB.x - pointA.x)) - 270;
+            return angle < 0 ? 360 + angle : angle;
+        }
+
+        static radToDeg(rad) {
+            return rad * 180 / Math.PI;
+        }
+
+        static degToRad(deg) {
+            return deg / 180 * Math.PI;
+        }
+    }
+
+    class LeafDrawer {
+        constructor(container, mouseTarget, leafDimensions) {
+            this.container = container;
+            mouseTarget.addEventListener("mousedown", e => this.onMousedown(e));
+            mouseTarget.addEventListener("mousemove", e => this.onMousemove(e));
+            mouseTarget.addEventListener("mouseup", e => this.onMouseup(e));
+            this.leafDiagonalAngle = TrigUtil.diagonalAngle(leafDimensions.width, leafDimensions.height);
+        }
+
+        static get leafClass() {
+            return "leaf";
+        }
+
+        static createNewLeaf() {
+            let leaf = new Image();
+            leaf.src = "leaf.svg";
+            leaf.classList.add(LeafDrawer.leafClass);
+            leaf.style.width = 0;
+            leaf.style.height = 0;
+            leaf.addEventListener("mouseup", e => console.log(e));
+            return leaf;
+        }
+
+        onMousedown(e) {
+            this.mouseIsPressed = true;
+            this.start = LeafDrawer.getPointInContainer(e);
+            this.leaf = LeafDrawer.createNewLeaf();
+            this.container.appendChild(this.leaf);
+        }
+
+        onMousemove(e) {
+            if (this.mouseIsPressed) {
+                let current = LeafDrawer.getPointInContainer(e);
+
+                let alpha = TrigUtil.angle(this.start, current);
+                let rotation = alpha - this.leafDiagonalAngle;
+                let hypotenuse = TrigUtil.distance(this.start, current);
+                let width = TrigUtil.oppositeLeg(this.leafDiagonalAngle, hypotenuse);
+                let height = TrigUtil.adjacentLeg(this.leafDiagonalAngle, hypotenuse);
+
+                this.leaf.style.left = this.start.x + "px";
+                this.leaf.style.top = this.start.y - height + "px";
+                this.leaf.style.transform = "rotate(" + rotation + "deg)";
+                this.leaf.style.width = width + "px";
+                this.leaf.style.height = height + "px";
+            }
+        }
+
+        onMouseup(e) {
+            this.mouseIsPressed = false;
+            let current = LeafDrawer.getPointInContainer(e);
+            if (this.start.x === current.x && this.start.y === current.y) {
+                this.removeTempLeaf();
+                this.tryRemoveClickedLeaf(e);
+                LeafDrawer.outputStyleArray();
+            }
+        }
+
+        static outputStyleArray() {
+            let leaves = document.getElementsByClassName(LeafDrawer.leafClass);
+            let leavesArray = Array.prototype.slice.call(leaves);
+            let styles = leavesArray.map(leaf => {
+                return {
+                    top: leaf.style.top,
+                    left: leaf.style.left,
+                    transform: leaf.style.transform,
+                    width: leaf.style.width,
+                    height: leaf.style.height
+                };
+            });
+            console.log(styles);
+        }
+
+        removeTempLeaf() {
+            this.leaf.parentNode.removeChild(this.leaf);
+        }
+
+        tryRemoveClickedLeaf(e) {
+            let elements = document.elementsFromPoint(e.clientX, e.clientY);
+            let leaf = elements.find(el => el.classList.contains(LeafDrawer.leafClass));
+            if (leaf) {
+                leaf.parentNode.removeChild(leaf);
+            }
+        }
+
+        static getPointInContainer(e) {
+            return {
                 x: e.offsetX,
                 y: e.offsetY
             };
-
-            let alpha = angle(start.x, start.y, current.x, current.y);
-            let rotation = alpha - leafDiagonalAngle;
-            let hypothenuse = distance(start.x, start.y, current.x, current.y);
-            let width = Math.sin(leafDiagonalAngle / 180 * Math.PI) * hypothenuse;
-            let height = Math.cos(leafDiagonalAngle / 180 * Math.PI) * hypothenuse;
-
-            leaf.style.left = start.x + "px";
-            leaf.style.top = start.y - height + "px";
-
-            leaf.style.transform = "rotate(" + rotation + "deg)";
-            leaf.style.width = width + "px";
-            leaf.style.height = height + "px";
         }
-    });
-
-    overlay.addEventListener("mouseup", e => {
-        isDown = false;
-    });
-
-    function distance(x1, y1, x2, y2) {
-        let a = x1 - x2;
-        let b = y1 - y2;
-        return Math.sqrt(a * a + b * b);
     }
 
-    function diagonalAngle(width, height) {
-        return Math.atan(width / height) * 180 / Math.PI;
+    class LeafInitializer {
+        constructor(stylesJson, container) {
+            let styles = JSON.parse(stylesJson);
+            styles.forEach(style => {
+                let leaf = new Image();
+                leaf.src = "leaf.svg";
+                leaf.classList.add("leaf");
+                leaf.style.top = style.top;
+                leaf.style.left = style.left;
+                leaf.style.transform = style.transform;
+                leaf.style.width = style.width;
+                leaf.style.height = style.height;
+                container.appendChild(leaf);
+            });
+        }
     }
 
-    function angle(x1, y1, x2, y2) {
-        let angle =  Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI - 270;
-        return angle < 0 ? 360 + angle : angle;
-    }
+    let container = document.getElementById("container");
+    let overlay = document.getElementById("overlay");
+    let leafDimensions = {width: 49, height: 71};
+    new LeafDrawer(container, overlay, leafDimensions);
+
+    let stylesJson = '[{"top":"33.3955px","left":"642px","transform":"rotate(-16.9107deg)","width":"28.0228px","height":"40.6045px"},{"top":"30.9498px","left":"558px","transform":"rotate(-25.1488deg)","width":"27.6403px","height":"40.0502px"},{"top":"150.272px","left":"713px","transform":"rotate(15.4313deg)","width":"27.4176px","height":"39.7275px"},{"top":"239.646px","left":"741px","transform":"rotate(42.2548deg)","width":"17.4978px","height":"25.354px"},{"top":"266.118px","left":"678px","transform":"rotate(111.173deg)","width":"17.1721px","height":"24.8821px"},{"top":"270.497px","left":"650px","transform":"rotate(19.2307deg)","width":"18.2911px","height":"26.5035px"},{"top":"217.807px","left":"615px","transform":"rotate(93.7563deg)","width":"17.3869px","height":"25.1932px"},{"top":"180.538px","left":"647px","transform":"rotate(-39.278deg)","width":"27.9248px","height":"40.4624px"},{"top":"130.268px","left":"657px","transform":"rotate(13.7553deg)","width":"20.519px","height":"29.7316px"},{"top":"110.572px","left":"615px","transform":"rotate(-31.9481deg)","width":"24.4506px","height":"35.4284px"},{"top":"135.535px","left":"586px","transform":"rotate(-4.1456deg)","width":"22.4056px","height":"32.4652px"},{"top":"106.65px","left":"561px","transform":"rotate(-20.1408deg)","width":"18.185px","height":"26.3497px"},{"top":"74.0907px","left":"513px","transform":"rotate(-42.2058deg)","width":"17.1909px","height":"24.9093px"},{"top":"78.144px","left":"451px","transform":"rotate(-43.8573deg)","width":"24.7457px","height":"35.856px"},{"top":"136.661px","left":"409px","transform":"rotate(-91.2033deg)","width":"31.9802px","height":"46.3386px"},{"top":"172.246px","left":"492px","transform":"rotate(-36.0083deg)","width":"23.2951px","height":"33.7541px"},{"top":"132.464px","left":"467px","transform":"rotate(-19.356deg)","width":"25.905px","height":"37.5358px"},{"top":"221.417px","left":"412px","transform":"rotate(-88.5838deg)","width":"23.1771px","height":"33.5831px"},{"top":"203.773px","left":"370px","transform":"rotate(-72.0165deg)","width":"24.3116px","height":"35.227px"},{"top":"268.65px","left":"413px","transform":"rotate(220.919deg)","width":"18.185px","height":"26.3497px"},{"top":"223.46px","left":"479px","transform":"rotate(-36.9971deg)","width":"27.2878px","height":"39.5395px"},{"top":"261.928px","left":"516px","transform":"rotate(212.19deg)","width":"17.3032px","height":"25.0719px"},{"top":"294.888px","left":"492px","transform":"rotate(2.86504deg)","width":"21.4717px","height":"31.1121px"},{"top":"298.151px","left":"447px","transform":"rotate(-53.5816deg)","width":"19.22px","height":"27.8494px"},{"top":"324.828px","left":"440px","transform":"rotate(233.653deg)","width":"18.7527px","height":"27.1723px"},{"top":"338.325px","left":"459px","transform":"rotate(232.209deg)","width":"20.4797px","height":"29.6746px"},{"top":"343.521px","left":"496px","transform":"rotate(211.639deg)","width":"15.5139px","height":"22.4793px"},{"top":"320.902px","left":"523px","transform":"rotate(137.259deg)","width":"20.082px","height":"29.0984px"},{"top":"308.072px","left":"673px","transform":"rotate(40.2348deg)","width":"28.2464px","height":"40.9285px"}]';
+    new LeafInitializer(stylesJson, container);
 </script>
 </body>
 </html>
