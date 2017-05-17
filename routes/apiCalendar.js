@@ -2,8 +2,6 @@ var express = require('express');
 var router = express.Router();
 var ical = require('ical');
 
-var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-
 function eventSort(a, b) {
     return new Date(a.start).getTime() - new Date(b.start).getTime();
 }
