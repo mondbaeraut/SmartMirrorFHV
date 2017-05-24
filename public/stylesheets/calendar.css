@@ -1,0 +1,62 @@
+#calendarEvent {
+    width: 300px;
+    height: 75px;
+    margin: 10px;
+    float: left;
+}
+
+#calendarDatetime {
+    float: left;
+    border: 1px dotted #fff;
+    padding: 5px;
+    text-align: center;
+    font-weight: bold;
+    height: 75px;
+    width: 75px;
+    background-color: #fff;
+    color: #000;
+}
+
+#calendarDay {
+    font-size: 40px;
+}
+
+#calendarMonth {
+    font-size: 20px;
+}
+
+#calendarInformation {
+    float: left;
+    border: 1px dotted #fff;
+    padding: 5px;
+    height: 75px;
+    width: 200px;
+}
+
+#calendarTitle {
+    font-weight: bold;
+    font-size: 22px;
+    padding: 3px 5px;
+    width: 190px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#calendarTime {
+    font-size: 15px;
+    padding: 0px 5px;
+    width: 190px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#calendarLocation {
+    font-size: 15px;
+    padding: 0px 5px;
+    width: 190px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
