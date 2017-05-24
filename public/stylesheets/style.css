@@ -1,9 +1,13 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
 body {
   font: 14px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
   color: white;
   background-color: black;
-  margin: 0px; 
-  padding: 0px;
   letter-spacing: 0.1em;
 }
 
