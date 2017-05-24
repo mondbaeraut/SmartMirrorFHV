@@ -12,19 +12,9 @@ a {
 }
 
 #right {
-  float:right;
     height: 100%;
 }
 
-#tree {
-<!-- hard coded best way EU -->
-    background-size: 100%;
-    position: absolute;
-    height: 100%;
-    width: 30%;
-    bottom: 0;
-    right: 0;
-}
 /* Main Container -  this controls the size of the circle */
 #circle_container_clock
 {
