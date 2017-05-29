@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
+var apiCalendar = require('./routes/apiCalendar');
 //var apiMiBand = require('./routes/apiMiBand');
 var apiBusStop = require('./routes/apiBusStop');
 
@@ -28,6 +29,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 //app.use('/api/miband', apiMiBand);
+app.use('/api/calendar', apiCalendar);
 app.use('/api/busstop', apiBusStop);
 
 // catch 404 and forward to error handler
