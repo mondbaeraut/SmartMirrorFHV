@@ -44,8 +44,41 @@ a {
     background-color: rebeccapurple;
 }
 #clock_date{
-    border: 3px solid white;
+    border: 2px solid white;
     background: white;
+}
+#date_old{
+    background: red;
+    color: gray;
+    width: 33%;
+}
+#date_now{
+    background: green;
+    color: white;
+    width: 33%;
+}
+#date_new{
+    background: red;
+    color: gray;
+    width: 33%;
+}
+#calendarDay{
+
+}
+#calendarMonth{
+
+}
+#calendarInformation{
+
+}
+#calendarTitle{
+
+}
+#calendarTime{
+
+}
+#calendarLocation{
+
 }
 
 #steps {

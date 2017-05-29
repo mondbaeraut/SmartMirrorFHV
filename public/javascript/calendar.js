@@ -6,11 +6,12 @@ const APIURL = 'api/calendar/';
 function reloadCalendarEvents() {
     $.get(APIURL, function (data) {
         $('#calendar').empty();
+        $('#calendar').append(`<div id="calendarHeader">Veranstaltungen</div>`);
         for(var calendarEvent in data){
             if(calendarEvent == 3){
                 break;
             }
-            addCalendarEvent(data[calendarEvent]);
+           addCalendarEvent(data[calendarEvent]);
         }
     });
 }
