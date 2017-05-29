@@ -1,3 +1,4 @@
+/*
 // Modules
 var noble = require('noble'); // https://github.com/sandeepmistry/noble/wiki/Getting-started
 var database = require('./database');
@@ -119,7 +120,7 @@ function readData() {
                                 }
                                 var batteryLevel = data[0];
                             });
-                        });*/
+                        });*//*
 
                     });
                 });
@@ -130,4 +131,5 @@ function readData() {
         });
     })
 }
+*/
 
