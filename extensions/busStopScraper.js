@@ -8,17 +8,17 @@ module.exports.getData = function (busstop) {
         var url = baseUrl.replace('$BUSSTOP_NAME$', busstop);
 
         scrapeIt(url, {
-            busStopName: '#middle div.vvv-monitor.abfahrtsmonitor h1'
-            , information: {
-                listItem: 'tbody > tr',
+            busStopName: "#middle div.vvv-monitor.abfahrtsmonitor h1",
+            information: {
+                listItem: "tbody > tr",
                 data: {
-                    number: 'th.linie p',
-                    direction: 'td.nach',
-                    time: 'td.planabfahrt'
+                    number: "th.linie p",
+                    direction: "td.nach",
+                    time: "td.planabfahrt"
                 }
             }
         }).then(page => {
             resolve(page);
         });
     });
-}
+};

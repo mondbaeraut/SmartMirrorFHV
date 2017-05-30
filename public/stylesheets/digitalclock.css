@@ -1,0 +1,35 @@
+#clockdate{
+    width: 99.2%;
+    height: 150px;
+    margin-left: 0%;
+    float: left;
+    border-right:solid;
+
+}
+#dgClock{
+    float: left;
+    height: 75px;
+    width: 100%;
+    background: white;
+
+}
+#dgClockText{
+    color: black;
+    font-size: 69px;
+    font-weight: bold;
+    padding: 19px;
+    padding-left: 40px;
+}
+#dgDate{
+    float: left;
+    height: 75px;
+    width: 100%;
+    background: white;
+}
+#dgDateText{
+    color: black;
+    font-size: 45px;
+    font-weight: bold;
+    padding: 3px;
+    padding-left: 59px;
+}

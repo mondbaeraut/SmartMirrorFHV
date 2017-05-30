@@ -7,3 +7,4 @@ $(document).ready(function() {
         $('#steps').append("10000 " + ' Schritte');
     });
 });
+

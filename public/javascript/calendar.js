@@ -5,12 +5,15 @@ const APIURL = 'api/calendar/';
 
 function reloadCalendarEvents() {
     $.get(APIURL, function (data) {
+        console.log(data);
         $('#calendar').empty();
+        $(`#calendar`).append(`<calendarHeader id="calendarHeader">Veranstaltungen</calendarHeader>`);
+
         for(var calendarEvent in data){
             if(calendarEvent == 3){
                 break;
             }
-            addCalendarEvent(data[calendarEvent]);
+           addCalendarEvent(data[calendarEvent]);
         }
     });
 }
