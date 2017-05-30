@@ -43,10 +43,7 @@ a {
     height: 50%;
     background-color: rebeccapurple;
 }
-#clock_date{
-    border: 2px solid white;
-    background: white;
-}
+
 #date_old{
     background: red;
     color: gray;

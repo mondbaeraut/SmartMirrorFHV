@@ -1,25 +1,33 @@
-#calendar{
-    background: white;
+#busstop{
+    margin-top: 10px;
 }
-#calendarHeader{
+#busstopHeader{
     background: white;
     border: 2px solid white;
+    border-top: 2px solid black;
     border-bottom: none;
     color: black;
     padding: 2px;
     font-size: 47px;
 }
-#calendarEvent {
+#bus{
+
     width: 99.2%;
     height: 100%;
     margin-left: 0%;
     float: left;
     border-bottom:solid;
     border-right:solid;
-    background: black;
 }
 
-#calendarDatetime {
+#busInfo{
+    float: left;
+    border: 1px solid black;
+    padding: 5px;
+    height: 75px;
+    width: 73.5%;
+}
+#busNumber{
     float: left;
     border: 1px dotted white ;
     padding: 5px;
@@ -31,25 +39,10 @@
     color: #000;
     border-bottom: 1px solid black;
     border-top: 1px solid black;
-}
+    font-size:50px;
 
-#calendarDay {
-    font-size: 40px;
 }
-
-#calendarMonth {
-    font-size: 20px;
-}
-
-#calendarInformation {
-    float: left;
-    border: 1px solid black;
-    padding: 5px;
-    height: 75px;
-    width: 73.5%;
-}
-
-#calendarTitle {
+#busDestination{
     font-weight: bold;
     font-size: 22px;
     padding: 3px 5px;
@@ -58,17 +51,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
-
-#calendarTime {
-    font-size: 15px;
-    padding: 0px 5px;
-    width: 190px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-#calendarLocation {
+#busTime{
     font-size: 15px;
     padding: 0px 5px;
     width: 190px;

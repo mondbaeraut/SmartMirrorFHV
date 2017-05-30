@@ -1,20 +1,53 @@
-$(document).ready(function() {
-    $.getJSON({
-        url: "/api/busstop/Bregenz+Bahnhof"
-    }).then(function(data) {
-        var json = data.getJSON();
-        console.log(json);
-        $('#dynamictable').append('<table></table>');
-        var table = $('#dynamictable').children();
-        table.append("<tr><td>ashdjshd</td><td>b</td></tr>");
-        table.append("<tr><td>c</td><td>d</td></tr>");
+const BUSAPIURL = `api/busstop/Koblach+Dorfplatz`;
+var divTag;
+function loadBusStopInfo() {
+    $.getJSON(BUSAPIURL, function (data) {
+        $(`#busstop`).empty();
+        $(`#busstop`).append(`<div id="busstopHeader">Abfahrtszeiten</div>`);
+        //var items = data.response.venue.tips.groups[0].items;
+        //console.log(data);
+        //console.log(data.information);
+        for (var busstop in data.information) {
+            //console.log(data.information[busstop]);
+            if (busstop == 3) {
+                break;
+            }
+            addBus(data.information[busstop]);
+        }
     });
-    getit();
-});
-
-
-function getit() {
-    $.getJSON("/api/busstop/Bregenz+Bahnhof",function (data) {
-
-    })
 }
+
+function addBus(data) {
+    console.log(data);
+    var number;
+    var direction;
+    var bustime;
+    number = data.number;
+    direction = data.direction;
+    bustime = data.time;
+    $(`#busstop`).append(`<div id="bus">
+    <div id="busNumber">`+ number + `</div>
+  <div id="busInfo"><div id="busDestination">`+ direction + `</div>
+        <div id="busTime">Abfahrtszeit:`+ bustime+ `</div></div></div>`);
+/*
+ <div id="busNumber">
+ ` + number + `
+ </div>
+
+ <div id="busInfo">
+ <div id="busDestination">
+ ` + direction + `
+ </div>
+ <div id="busTime">
+ ` + bustime + `
+ </div>
+ </div>
+ </div>`);*/
+ }
+
+
+ $(document).ready(function () {
+ loadBusStopInfo();
+ setInterval(loadBusStopInfo, 1000 * 60 * 10);
+
+ });
