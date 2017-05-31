@@ -1,4 +1,3 @@
-/*
 // Modules
 var noble = require('noble'); // https://github.com/sandeepmistry/noble/wiki/Getting-started
 var database = require('./database');
@@ -17,14 +16,22 @@ module.exports.getMiBandData = function () {
 
             database.getDailyBandSteps(responseBand.uuid).then(function (responseDb) {
                 console.log(JSON.stringify(responseDb));
+                var stepsOld = 0;
                 if (responseDb == '') {
                     console.log('no data found, inserting new record');
                     database.insertDailySteps(responseBand.uuid, responseBand.steps);
                 } else {
                     console.log('data found, updating record');
+                    stepsOld = responseDb[0].steps;
                     database.updateDailySteps(responseBand.uuid, responseBand.steps);
                 }
-                resolve(responseBand);
+                responseBand.stepsNew = responseBand.steps - stepsOld;
+                database.getDailyStepsTotal().then(function(dailyStepsTotal) {
+                    console.log(dailyStepsTotal, 'daily steps total');
+                    responseBand.dailyStepsTotal = dailyStepsTotal;
+                    console.log(JSON.stringify(responseBand));
+                    resolve(responseBand);
+                });
             }, function (error) {
                 reject(error);
             });
@@ -120,7 +127,7 @@ function readData() {
                                 }
                                 var batteryLevel = data[0];
                             });
-                        });*//*
+                        });*/
 
                     });
                 });
@@ -131,5 +138,3 @@ function readData() {
         });
     })
 }
-*/
-
