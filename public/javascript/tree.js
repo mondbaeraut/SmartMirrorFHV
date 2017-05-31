@@ -155,7 +155,7 @@ var currentLeaf = 0;
 
 function rand(min, max) {
 	return Math.random() * (max - min) + min;
-}/********************
+}
 setInterval( function() {
 	let leaves = document.querySelectorAll(".leaf:not(.leafFallAnimation)");
 	if(leaves.length > 0) {
@@ -164,7 +164,7 @@ setInterval( function() {
 		leaves[i].classList.add("leafFallAnimation");
 		
 	}
-}, 10000);*/
+}, 10000);
 
 function removeLeaves(percentageToRemove) {
 	let totalLeaves = document.querySelectorAll(".leaf");
