@@ -6,7 +6,9 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
-var apiMiBand = require('./routes/apiMiBand');
+var apiCalendar = require('./routes/apiCalendar');
+//var apiMiBand = require('./routes/apiMiBand');
+var apiBusStop = require('./routes/apiBusStop');
 
 var database = require('./miband/database');
 database.initializeDatabase();
@@ -26,7 +28,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
-app.use('/api/miband', apiMiBand);
+//app.use('/api/miband', apiMiBand);
+app.use('/api/calendar', apiCalendar);
+app.use('/api/busstop', apiBusStop);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

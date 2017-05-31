@@ -1,3 +1,4 @@
+
 function clock() {
 
     //Save the times in variables
@@ -27,9 +28,12 @@ function clock() {
 
     var date = [(day > 9 ? '' : '0') + day, (month > 9 ? '' : '0') + month, today.getFullYear()].join('.');
 
-    document.getElementById("clock").innerHTML = (hours + ":" + minutes + ":" + seconds);
-    document.getElementById("date").innerHTML = date;
+    document.getElementById("dgClockText").innerHTML = (hours + ":" + minutes + ":" + seconds);
+    document.getElementById("dgDateText").innerHTML = date;
 
 }
+$(document).ready(function(){
+    clock();
+    setInterval('clock()', 1000);
+});
 
-setInterval('clock()', 1000);

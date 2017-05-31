@@ -1,8 +1,9 @@
+/*
 var express = require('express');
 var router = express.Router();
 var miBand = require('../miband/miband');
 
-/* GET home page. */
+/* GET home page. *//*
 router.get('/', function (req, res, next) {
 	miBand.getMiBandData().then(function (response) {
 		console.log("Success!", response.steps);
@@ -14,3 +15,4 @@ router.get('/', function (req, res, next) {
 });
 
 module.exports = router;
+*/
