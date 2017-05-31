@@ -32,7 +32,6 @@
 @keyframes exampleAnimation {
 to {
 		transform: rotate(400deg);
-		filter: sepia(90%);
 		top:98%;
 	}
 }
