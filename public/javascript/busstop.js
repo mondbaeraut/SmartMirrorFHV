@@ -1,4 +1,5 @@
-const BUSAPIURL = `api/busstop/Koblach+Dorfplatz`;
+//const BUSAPIURL = `api/busstop/Koblach+Dorfplatz`;
+const BUSAPIURL = `api/busstop/Bregenz+Bahnhof`;
 var divTag;
 function loadBusStopInfo() {
     $.getJSON(BUSAPIURL, function (data) {

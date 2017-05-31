@@ -7,7 +7,7 @@ function reloadCalendarEvents() {
     $.get(APIURL, function (data) {
         console.log(data);
         $('#calendar').empty();
-        $(`#calendar`).append(`<calendarHeader id="calendarHeader">Veranstaltungen</calendarHeader>`);
+        $(`#calendar`).append(`<calendarHeader id="calendarHeader">Kalender</calendarHeader>`);
 
         for(var calendarEvent in data){
             if(calendarEvent == 3){

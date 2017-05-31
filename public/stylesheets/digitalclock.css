@@ -17,14 +17,14 @@
     color: black;
     font-size: 69px;
     font-weight: bold;
-    padding: 19px;
-    padding-left: 40px;
+    padding: 14px;
 }
 #dgDate{
     float: left;
     height: 75px;
     width: 100%;
     background: white;
+    margin-top: 19px;
 }
 #dgDateText{
     color: black;

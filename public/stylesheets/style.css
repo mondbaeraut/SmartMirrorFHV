@@ -1,10 +1,14 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
 body {
-    font: 14px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
-    color: white;
-    background-color: black;
-    margin: 0px;
-    padding: 0px;
-    letter-spacing: 0.1em;
+  font: 14px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+  color: white;
+  background-color: black;
+  letter-spacing: 0.1em;
 }
 
 a {
@@ -12,18 +16,12 @@ a {
 }
 
 #right {
-    float:right;
-    height: 100%;
+    height: 90%;
+    position: relative;
+    margin-bottom: 5%;
 }
 
-#tree {
-    <!-- hard coded best way EU --> background-size: 100%;
-    position: absolute;
-    height: 100%;
-    width: 30%;
-    bottom: 0;
-    right: 0;
-}
+
 
 #left {
     float: left;
@@ -44,43 +42,12 @@ a {
     background-color: rebeccapurple;
 }
 
-#date_old{
-    background: red;
-    color: gray;
-    width: 33%;
-}
-#date_now{
-    background: green;
-    color: white;
-    width: 33%;
-}
-#date_new{
-    background: red;
-    color: gray;
-    width: 33%;
-}
-#calendarDay{
-
-}
-#calendarMonth{
-
-}
-#calendarInformation{
-
-}
-#calendarTitle{
-
-}
-#calendarTime{
-
-}
-#calendarLocation{
-
+#clock {
+    top:500px;
+    font-size: 50px;
 }
 
-#steps {
-    border: 1px solid white;
-    margin-top: 2px;
-    font-size: 4em;
-
+#date {
+    top: 560px;
+    font-size: 20px;
 }
