@@ -16,7 +16,9 @@ a {
 }
 
 #right {
-    height: 100%;
+    height: 90%;
+    position: relative;
+    margin-bottom: 5%;
 }
 
 /* Main Container -  this controls the size of the circle */
