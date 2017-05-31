@@ -19,8 +19,21 @@ module.exports.getDailyBandSteps = function (bandUuid) {
         database.serialize(function () {
             database.all('select * from trackerSteps where trackerId = \'' + bandUuid + '\' and strftime(\'%Y%m%d\',date) = strftime(\'%Y%m%d\',\'now\')', function (error, rows) {
                 if (error) console.log(error);
-                console.log('Rows: ' + rows);
                 resolve(rows);
+            });
+            database.close();
+        });
+    })
+}
+
+module.exports.getDailyStepsTotal = function () {
+    return new Promise(function (resolve, reject) {
+        console.log('get daily steps total from database');
+        var database = new sqlite.Database('./SmartMirror.db');
+        database.serialize(function () {
+            database.all('select sum(steps) as steps from trackerSteps where strftime(\'%Y%m%d\',date) = strftime(\'%Y%m%d\',\'now\')', function (error, rows) {
+                if (error) console.log(error);
+                resolve(rows[0].steps);
             });
             database.close();
         });
