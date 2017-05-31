@@ -7,11 +7,16 @@ var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
 var apiCalendar = require('./routes/apiCalendar');
-var apiMiBand = require('./routes/apiMiBand');
 var apiBusStop = require('./routes/apiBusStop');
 
 var database = require('./miband/database');
 database.initializeDatabase();
+
+var sse = require('./miband/sse');
+var sseRoute = require('./routes/sseMiband');
+connectionsSSE = []; // global variable for connections
+var mibandScanner = require('./miband/mibandScanner');
+mibandScanner.startScanning();
 
 var app = express();
 
@@ -28,9 +33,10 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
-app.use('/api/miband', apiMiBand);
 app.use('/api/calendar', apiCalendar);
 app.use('/api/busstop', apiBusStop);
+app.use(sse);
+app.use('/sse/miband', sseRoute);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
