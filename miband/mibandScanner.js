@@ -10,20 +10,6 @@ var BATTERY_INFO_UUID = 'ff0c';
 
 var RSSI_THRESHOLD = -70;
 
-// get miband data
-// TODO database operations into scanning function
-module.exports.getMiBandData = function () {
-    return new Promise(function (resolve, reject) {
-        readData().then(function (responseBand) {
-            console.log('MiBand data read ' + responseBand.uuid);
-
-
-        }, function (error) {
-            reject(error);
-        })
-    });
-}
-
 // load values via bluetooth
 module.exports.startScanning = function () {
     // start scanning when function is called
