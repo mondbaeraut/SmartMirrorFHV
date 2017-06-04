@@ -30,9 +30,10 @@ a {
 }
 
 #lefttop {
-    position: relative;
+    position: absolute;
     top: 0%;
     height: 60%;
+    width: 20%;
 }
 
 #leftbottom {
@@ -51,3 +52,4 @@ a {
     top: 560px;
     font-size: 20px;
 }
+

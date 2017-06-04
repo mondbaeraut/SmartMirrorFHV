@@ -1,25 +1,31 @@
 #calendar{
     background: white;
+    width: 100%;
+    margin-top: 180px;
 }
-#calendarHeader{
-    border-bottom: none;
+#calendarHead{
+    background: white;
+}
+#calendarHeadH{
+    width: 100%;
+    font-size: 50px;
     color: black;
-    padding: 10px;
-    font-size: 47px;
+    padding: 20px;
+    border-bottom: 1px solid black;
 }
 #calendarEvent {
     width: 99.2%;
-    height: 100%;
-    margin-left: 0%;
+    /* height: 100%; */
+    /* margin-left: 0%; */
     float: left;
-    border-bottom:solid;
-    border-right:solid;
-    background: black;
+    border-bottom: solid;
+    border-right: solid;
+    /* background: black; */
 }
 
 #calendarDatetime {
     float: left;
-    border: 1px dotted white ;
+    border: 1px dotted white;
     padding: 5px;
     text-align: center;
     font-weight: bold;
@@ -27,7 +33,7 @@
     width: 19%;
     background-color: #fff;
     color: #000;
-    border-bottom: 1px solid black;
+    /* border-bottom: 1px solid black; */
     border-top: 1px solid black;
 }
 

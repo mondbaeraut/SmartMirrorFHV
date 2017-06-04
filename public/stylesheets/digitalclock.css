@@ -1,17 +1,20 @@
 #clockdate{
     width: 99.2%;
-    height: 150px;
+    height: 162px;
     margin-left: 0%;
     float: left;
-    border-right:solid;
+    border-right: solid;
+    background: white;
+    text-align: center;
 
 }
 #dgClock{
     float: left;
     height: 75px;
     width: 100%;
-    background: white;
-
+    /* background: white; */
+    /* padding-left: 26px; */
+    padding-top: 12px;
 }
 #dgClockText{
     color: black;
@@ -24,12 +27,11 @@
     height: 75px;
     width: 100%;
     background: white;
-    margin-top: 19px;
 }
 #dgDateText{
     color: black;
     font-size: 45px;
     font-weight: bold;
-    padding: 3px;
-    padding-left: 59px;
+    /* padding: 3px; */
+    /* padding-left: 59px; */
 }

@@ -1,62 +1,78 @@
-#busstop{
-    margin-top: 10px;
+#busstop {
+    margin-top: 285px;
+    width: 100%;
 }
-#busstopHeader{
+
+#busHead {
     background: white;
-    border: 2px solid white;
-    border-top: 2px solid black;
-    border-bottom: none;
+}
+
+#busHeadH {
+    width: 100%;
+    font-size: 50px;
     color: black;
-    padding: 10px;
-    font-size: 47px;
-}
-#bus{
-
-    width: 99.2%;
-    height: 100%;
-    margin-left: 0%;
-    float: left;
-    border-bottom:solid;
-    border-right:solid;
-    background: black;
-}
-
-#busInfo{
-    float: left;
-    border: 1px solid black;
-    padding: 5px;
-    height: 75px;
-    width: 73.5%;
-}
-#busNumber{
-    float: left;
-    border: 1px dotted white ;
-    padding: 5px;
-    text-align: center;
-    font-weight: bold;
-    height: 75px;
-    width: 19%;
-    background-color: #fff;
-    color: #000;
+    padding: 20px;
     border-bottom: 1px solid black;
-    border-top: 1px solid black;
-    font-size:50px;
+}
+
+busInformation {
+    width: 100%;
+    color: black;
+    background: white;
+}
+
+table {
+    /* border: 1px solid black; */
+    color: black;
+    width: 100%;
+    /* margin-left: 2px; */
+    table-layout: fixed;
+    font-size: 17px;
+    background: white;
+    text-align: center;
+}
+
+tbody {
+    width: 100%;
+}
+
+tr {
+    height: 40px;
+}
+
+tr:nth-child(1) {
+    background: white;
+}
+
+tr:nth-child(2) {
+    background: lightgray;
+}
+
+tr:nth-child(3) {
+    background: white;
+}
+
+tr:nth-child(4) {
+    background: lightgray;
+}
+
+td:nth-child(1) {
+    width: 9%;
 
 }
-#busDestination{
-    font-weight: bold;
-    font-size: 22px;
-    padding: 3px 5px;
-    width: 190px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+
+td:nth-child(2) {
+    width: 5%;
+    background: yellow;
 }
-#busTime{
-    font-size: 15px;
-    padding: 0px 5px;
-    width: 190px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+
+td:nth-child(3) {
+    width: 27%;
+
 }
+
+td:nth-child(4) {
+    width: 7%;
+
+}
+
