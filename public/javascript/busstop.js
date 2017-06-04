@@ -17,7 +17,7 @@ function callApi(dest_url) {
 }
 
 function loadBusStopInfo() {
-
+    $(`#busstop`).empty();
     $(`#busstop`).append(`<div id="busHead"><div id="busHeadH"> Abfahrtszeiten</div></div><div id="busHeadInformation"><table id="bustable">`);
     var table = document.getElementById("bustable");
     var tr = document.createElement('tr');
@@ -105,6 +105,5 @@ function addBus(number, direction, depature, diffrence) {
 
 $(document).ready(function () {
     loadBusStopInfo();
-    setInterval(loadBusStopInfo, 1000 * 60 * 10);
-
+    setInterval(loadBusStopInfo, 1000 * 60);
 });
