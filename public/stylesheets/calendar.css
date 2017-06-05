@@ -1,7 +1,7 @@
 #calendar{
     background: white;
     width: 100%;
-    margin-top: 180px;
+    margin-top: 268px;
 }
 #calendarHead{
     background: white;
@@ -14,7 +14,7 @@
     border-bottom: 1px solid black;
 }
 #calendarEvent {
-    width: 99.2%;
+    width: 99.4%;
     /* height: 100%; */
     /* margin-left: 0%; */
     float: left;
@@ -75,7 +75,7 @@
 #calendarLocation {
     font-size: 15px;
     padding: 0px 5px;
-    width: 190px;
+    width: 100%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

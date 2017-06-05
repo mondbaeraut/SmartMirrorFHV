@@ -1,4 +1,4 @@
-const BUSURLS = ["api/busstop/Koblach+Gasthaus+Harmonie", "api/busstop/Koblach+Dorfplatz", "api/busstop/Bregenz+Bahnhof"];
+const BUSURLS = ["api/busstop/Koblach+Gasthaus+Harmonie", "api/busstop/Koblach+Dorfplatz"];
 var divTag;
 var count = 0;
 var busData = [];
@@ -26,18 +26,22 @@ function loadBusStopInfo() {
     var td2 = document.createElement('td');
     var td3 = document.createElement('td');
     var td4 = document.createElement('td');
+    var td5 = document.createElement('td');
     var text1 = document.createTextNode('Abfahrt\n in min');
-    var text2 = document.createTextNode('NR');
+    var text2 = document.createTextNode('Linie');
     var text3 = document.createTextNode('Ziel');
-    var text4 = document.createTextNode('Plan');
+    var text4 = document.createTextNode('Bushaltestelle');
+    var text5 = document.createTextNode('Plan');
     td1.appendChild(text1);
     td2.appendChild(text2);
     td3.appendChild(text3);
     td4.appendChild(text4);
+    td5.appendChild(text5);
     tr.appendChild(td1);
     tr.appendChild(td2);
     tr.appendChild(td3);
     tr.appendChild(td4);
+    tr.appendChild(td5);
     table.appendChild(tr);
     var arrayPos = 0;
     for (var i = 0; i < BUSURLS.length; i++) {
@@ -45,6 +49,7 @@ function loadBusStopInfo() {
         //rework
         for (var k = 0; k < result.information.length; k++) {
             if (result.information[k].number != "") {
+                result.information[k]["busstop"] = result.busStopName;
                 busData[arrayPos] = result.information[k];
                 arrayPos++;
             }
@@ -67,7 +72,7 @@ function loadBusStopInfo() {
         var bustime = (parseInt(splitTime[0]) * 60) + parseInt(splitTime[1]);
         var diffrence = bustime - ((actualTime.getHours() * 60) + actualTime.getMinutes());
         if (diffrence > 0) {
-            addBus(busData[busstop].number, busData[busstop].direction, busData[busstop].time, diffrence);
+            addBus(busData[busstop].number, busData[busstop].direction, busData[busstop].busstop, busData[busstop].time, diffrence);
             displayedBuses++;
         }
 
@@ -79,7 +84,7 @@ function loadBusStopInfo() {
 
 }
 
-function addBus(number, direction, depature, diffrence) {
+function addBus(number, direction, busstop, depature, diffrence) {
     var table = document.getElementById("bustable");
     var tr = document.createElement('tr');
 
@@ -87,18 +92,22 @@ function addBus(number, direction, depature, diffrence) {
     var td2 = document.createElement('td');
     var td3 = document.createElement('td');
     var td4 = document.createElement('td');
+    var td5 = document.createElement('td');
     var text1 = document.createTextNode(diffrence);
     var text2 = document.createTextNode(number);
     var text3 = document.createTextNode(direction);
-    var text4 = document.createTextNode(depature);
+    var text4 = document.createTextNode(busstop);
+    var text5 = document.createTextNode(depature);
     td1.appendChild(text1);
     td2.appendChild(text2);
     td3.appendChild(text3);
     td4.appendChild(text4);
+    td5.appendChild(text5)
     tr.appendChild(td1);
     tr.appendChild(td2);
     tr.appendChild(td3);
     tr.appendChild(td4);
+    tr.appendChild(td5);
     table.appendChild(tr);
 }
 

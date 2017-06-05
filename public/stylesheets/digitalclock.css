@@ -1,6 +1,6 @@
 #clockdate{
     width: 99.2%;
-    height: 162px;
+    height: 250px;
     margin-left: 0%;
     float: left;
     border-right: solid;
@@ -24,7 +24,7 @@
 }
 #dgDate{
     float: left;
-    height: 75px;
+    /* height: 75px; */
     width: 100%;
     background: white;
 }

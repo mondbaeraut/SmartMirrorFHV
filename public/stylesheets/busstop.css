@@ -22,11 +22,11 @@ busInformation {
 }
 
 table {
-    /* border: 1px solid black; */
+    /* border: 2px solid white; */
     color: black;
-    width: 100%;
+    width: 100.2%;
     /* margin-left: 2px; */
-    table-layout: fixed;
+    /* table-layout: fixed; */
     font-size: 17px;
     background: white;
     text-align: center;
@@ -57,22 +57,22 @@ tr:nth-child(4) {
 }
 
 td:nth-child(1) {
-    width: 9%;
+    width: 15%;
 
 }
 
 td:nth-child(2) {
-    width: 5%;
+    width: 8%;
     background: yellow;
 }
 
 td:nth-child(3) {
-    width: 27%;
+    width: 30%;
 
 }
 
 td:nth-child(4) {
-    width: 7%;
+    width: 30%;
 
 }
 
