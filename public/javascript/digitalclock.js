@@ -1,4 +1,5 @@
-
+var day = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag"];
+var month = ["Jänner", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"]
 function clock() {
 
     //Save the times in variables
@@ -23,16 +24,14 @@ function clock() {
         seconds = seconds;
     }
 
-    var month = today.getMonth() + 1; // getMonth() is zero-based
-    var day = today.getDate();
 
-    var date = [(day > 9 ? '' : '0') + day, (month > 9 ? '' : '0') + month, today.getFullYear()].join('.');
-
-    document.getElementById("dgClockText").innerHTML = (hours + ":" + minutes + ":" + seconds);
-    document.getElementById("dgDateText").innerHTML = date;
-
+    var date = new Date();
+    document.getElementById("dgDateText").innerHTML = (day[date.getDay() - 1] + ", " + date.getDay() + " " + month[date.getMonth()] + " " + date.getFullYear());
+    document.getElementById("dgClockHourText").innerHTML = (hours + ":");
+    document.getElementById("dgClockMinuteText").innerHTML = (minutes);
+    document.getElementById("dgClockSecondText").innerHTML = (seconds);
 }
-$(document).ready(function(){
+$(document).ready(function () {
     clock();
     setInterval('clock()', 1000);
 });

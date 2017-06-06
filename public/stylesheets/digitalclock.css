@@ -1,37 +1,63 @@
-#clockdate{
-    width: 99.2%;
-    height: 250px;
-    margin-left: 0%;
-    float: left;
-    border-right: solid;
-    background: white;
-    text-align: center;
-
-}
-#dgClock{
-    float: left;
-    height: 75px;
+#clockdate {
     width: 100%;
-    /* background: white; */
-    /* padding-left: 26px; */
-    padding-top: 12px;
+    /* height: 250px; */
+    /* margin-left: 0%; */
+    float: left;
+    /* border-right: solid; */
+    text-align: center;
+    padding-top: 20px;
+    margin-left: -44px;
 }
-#dgClockText{
-    color: black;
-    font-size: 69px;
-    font-weight: bold;
-    padding: 14px;
-}
-#dgDate{
+
+#dgClock {
     float: left;
     /* height: 75px; */
     width: 100%;
-    background: white;
+    /* background: white; */
+    /* padding-left: 26px; */
+    /* padding-top: 0px; */
+    /* margin-top: -21px; */
 }
-#dgDateText{
-    color: black;
-    font-size: 45px;
-    font-weight: bold;
+
+#dgClockHourText {
+    color: white;
+    font-size: 69px;
+    /* font-weight: bold; */
+    float: left;
+    /* padding: 14px; */
+    padding-left: 15%;
+}
+
+#dgClockMinuteText {
+    color: white;
+    font-size: 69px;
+    /* font-weight: bold; */
+    /* padding: 14px; */
+    float: left;
+}
+
+#dgClockSecondText {
+    color: grey;
+    font-size: 34px;
+    /* font-weight: bold; */
+    /* padding: 14px; */
+    float: left;
+    padding-top: 4px;
+}
+
+#dgDate {
+    float: left;
+    /* height: 75px; */
+    width: 100%;
+    /* background: white; */
+    /* margin-top: -109px; */
+}
+
+#dgDateText {
+    color: grey;
+    font-size: 34px;
+    /* font-weight: bold; */
     /* padding: 3px; */
+    /* padding-top: 55px; */
     /* padding-left: 59px; */
 }

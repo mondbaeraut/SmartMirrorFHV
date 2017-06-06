@@ -17,14 +17,14 @@
 #weather {
     width: 100%;
     /* margin: 250px auto; */
-    text-align: center;
+    /* text-align: center; */
     text-transform: uppercase;
 }
 
 i {
-    color: black;
+    color: grey;
     font-family: weather;
-    font-size: 100px;
+    font-size: 57px;
     font-weight: normal;
     font-style: normal;
     line-height: 1.0;
@@ -81,14 +81,15 @@ i {
 .icon-47:before { content: "S"; }
 
 #weather h2 {
-    /* margin: 0 0 8px; */
-    color: black;
-    font-size: 50px;
+    margin: 0px;
+    margin-left: -115px;
+    color: grey;
+    font-size: 34px;
     /* font-weight: 300; */
-    text-align: center;
-    text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.15);
-    height: 250px;
-    width: 99.7%;
+    /* text-align: center; */
+    /* text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.15); */
+    /* height: 250px; */
+    width: 100%;
 }
 
 #weather ul {

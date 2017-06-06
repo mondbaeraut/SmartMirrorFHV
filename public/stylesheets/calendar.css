@@ -1,40 +1,45 @@
 #calendar{
-    background: white;
+    /* background: white; */
     width: 100%;
-    margin-top: 268px;
+    margin-top: 200px;
+    margin-left: 43px;
 }
 #calendarHead{
-    background: white;
+
 }
 #calendarHeadH{
     width: 100%;
-    font-size: 50px;
+    font-size: 69px;
     color: black;
-    padding: 20px;
-    border-bottom: 1px solid black;
+    /* padding: 20px; */
+    border-bottom: 1px solid grey;
+    color: white;
 }
 #calendarEvent {
-    width: 99.4%;
+    width: 100%;
     /* height: 100%; */
     /* margin-left: 0%; */
     float: left;
-    border-bottom: solid;
-    border-right: solid;
+    border-bottom: 1px solid grey;
+    border-right: 1px solid grey;
+    /* border-right: solid; */
     /* background: black; */
 }
 
 #calendarDatetime {
     float: left;
-    border: 1px dotted white;
+    /* border: 1px dotted white; */
     padding: 5px;
     text-align: center;
-    font-weight: bold;
+    /* font-weight: bold; */
     height: 75px;
     width: 19%;
-    background-color: #fff;
-    color: #000;
+    /* background-color: #fff; */
+    color: white;
     /* border-bottom: 1px solid black; */
-    border-top: 1px solid black;
+    /* border-top: 1px solid black; */
+    border-left: 1px solid grey;
+    border-right: 1px solid grey;
 }
 
 #calendarDay {
@@ -57,7 +62,7 @@
     font-weight: bold;
     font-size: 22px;
     padding: 3px 5px;
-    width: 190px;
+    /* width: 190px; */
     white-space: nowrap;
     overflow: hidden;
 }

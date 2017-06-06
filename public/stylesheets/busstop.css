@@ -1,34 +1,36 @@
 #busstop {
     margin-top: 285px;
     width: 100%;
+    margin-left: 43px;
 }
 
 #busHead {
-    background: white;
+    /*background: white; */
+border-bottom: 1px solid grey;
 }
 
 #busHeadH {
     width: 100%;
-    font-size: 50px;
-    color: black;
-    padding: 20px;
-    border-bottom: 1px solid black;
+    font-size: 69px;
+    /* color: black; */
+    /* padding: 20px; */
+    /* border-bottom: 1px solid black; */
 }
 
 busInformation {
     width: 100%;
     color: black;
-    background: white;
 }
 
 table {
-    /* border: 2px solid white; */
-    color: black;
+    border: 1px solid grey;
+    border-bottom: 0px;
+    color: white;
     width: 100.2%;
     /* margin-left: 2px; */
     /* table-layout: fixed; */
     font-size: 17px;
-    background: white;
+    /* background: white; */
     text-align: center;
 }
 
@@ -41,38 +43,47 @@ tr {
 }
 
 tr:nth-child(1) {
-    background: white;
+    /* background: white; */
+    /* border-bottom: 1px solid grey; */
 }
 
 tr:nth-child(2) {
-    background: lightgray;
+    /*background: lightgray;*/
 }
 
 tr:nth-child(3) {
-    background: white;
+   /* background: white;*/
 }
 
 tr:nth-child(4) {
-    background: lightgray;
+    /*background: lightgray;*/
 }
 
 td:nth-child(1) {
     width: 15%;
+    border-bottom: 1px solid grey;
 
 }
 
 td:nth-child(2) {
     width: 8%;
+    color: black;
     background: yellow;
+    border-bottom: 1px solid grey;
 }
 
 td:nth-child(3) {
     width: 30%;
+    border-bottom: 1px solid grey;
 
 }
 
 td:nth-child(4) {
     width: 30%;
+    border-bottom: 1px solid grey;
 
+}
+td:nth-child(5){
+    border-bottom: 1px solid grey;
 }
 
