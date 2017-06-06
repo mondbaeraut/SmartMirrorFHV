@@ -1,5 +1,9 @@
 // Modules
-var noble = require('noble'); // https://github.com/sandeepmistry/noble/wiki/Getting-started
+try {
+    var noble = require('noble'); // https://github.com/sandeepmistry/noble/wiki/Getting-started
+} catch (e) {
+    console.error("Just run npm install lul");
+}
 var database = require('./database');
 
 // Constants
@@ -11,7 +15,7 @@ var BATTERY_INFO_UUID = 'ff0c';
 var RSSI_THRESHOLD = -70;
 
 // load values via bluetooth
-module.exports.startScanning = function () {
+module.exports.startScanning = !noble ? function () {} : function () {
     // start scanning when function is called
     var serviceUUIDs = [SERVICE_UUID]; // default: [] => all
     var allowDuplicates = false; // default: false
