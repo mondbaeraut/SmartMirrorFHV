@@ -42,48 +42,31 @@ border-bottom: 1px solid grey;
     height: 40px;
 }
 
-tr:nth-child(1) {
-    /* background: white; */
-    /* border-bottom: 1px solid grey; */
-}
-
-tr:nth-child(2) {
-    /*background: lightgray;*/
-}
-
-tr:nth-child(3) {
-   /* background: white;*/
-}
-
-tr:nth-child(4) {
-    /*background: lightgray;*/
-}
-
-td:nth-child(1) {
+#busstop td:nth-child(1) {
     width: 15%;
     border-bottom: 1px solid grey;
 
 }
 
-td:nth-child(2) {
+#busstop td:nth-child(2) {
     width: 8%;
     color: black;
     background: yellow;
     border-bottom: 1px solid grey;
 }
 
-td:nth-child(3) {
+#busstop td:nth-child(3) {
     width: 30%;
     border-bottom: 1px solid grey;
 
 }
 
-td:nth-child(4) {
+#busstop td:nth-child(4) {
     width: 30%;
     border-bottom: 1px solid grey;
 
 }
-td:nth-child(5){
+#busstop td:nth-child(5){
     border-bottom: 1px solid grey;
 }
 
