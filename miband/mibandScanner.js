@@ -19,11 +19,11 @@ module.exports.startScanning = !noble ? function () {
     function sendDummy() {
         connectionsSSE.forEach(c => {
             c.sseSend({
-                "uuid":"77cdab9136fa40f4ae5f8400331ad47f",
-                "rssi":-74,
-                "steps":87,
-                "stepsNew":0,
-                "dailyStepsTotal":665
+                "uuid": "77cdab9136fa40f4ae5f8400331ad47f",
+                "rssi": -74,
+                "steps": 87,
+                "stepsNew": 0,
+                "dailyStepsTotal": 665
             });
         });
     }
@@ -60,6 +60,17 @@ module.exports.startScanning = !noble ? function () {
                     if (error) {
                         console.error('error connecting to peripheral', error);
                     }
+
+                    // disconnect after 10 seconds inactivity
+                    var disconnectTimeout = setTimeout(function () {
+                        if (peripheral.state != 'disconnected') {
+                            peripheral.disconnect(function (error) {
+                                console.log('disconnected from peripheral: ' + peripheral.uuid);
+                            });
+                        }
+                        noble.startScanning(serviceUUIDs, allowDuplicates);
+                        console.log('start scanning for BLE devices with service id ' + SERVICE_UUID);
+                    }, 10000);
 
                     console.log('connected to peripheral: ' + peripheral.uuid);
                     peripheral.discoverServices([SERVICE_UUID], function (error, services) {
@@ -99,13 +110,18 @@ module.exports.startScanning = !noble ? function () {
                                         database.insertUpdateDailySteps(responseDb, data.uuid, data.steps).then(function () {
                                             data.stepsNew = data.steps - stepsOld;
                                             database.getDailyStepsTotal().then(function (dailyStepsTotal) {
-                                                data.dailyStepsTotal = dailyStepsTotal + data.stepsNew; // add new steps, because insert / update is async
+                                                data.dailyStepsTotal = dailyStepsTotal; // add new steps, because insert / update is async
                                                 console.log(JSON.stringify(data));
 
                                                 // send to all sse connections
-                                                for (var i = 0; i < connectionsSSE.length; i++) {
-                                                    connectionsSSE[i].sseSend(data)
+                                                if (data.stepsNew > 0) {
+                                                    for (var i = 0; i < connectionsSSE.length; i++) {
+                                                        connectionsSSE[i].sseSend(data)
+                                                    }
                                                 }
+
+                                                // clear the disconnect timeout
+                                                clearTimeout(disconnectTimeout);
 
                                                 noble.startScanning(serviceUUIDs, allowDuplicates);
                                                 console.log('start scanning for BLE devices with service id ' + SERVICE_UUID);
