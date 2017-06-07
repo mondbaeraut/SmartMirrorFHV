@@ -124,8 +124,7 @@ module.exports.startScanning = !noble ? function () {
                                                     // clear the disconnect timeout
                                                     clearTimeout(disconnectTimeout);
 
-                                                    noble.startScanning(serviceUUIDs, allowDuplicates);
-                                                    console.log('start scanning for BLE devices with service id ' + SERVICE_UUID);
+                                                    scheduleScanning(serviceUUIDs, allowDuplicates);
                                                 });
                                             });
 
@@ -142,13 +141,18 @@ module.exports.startScanning = !noble ? function () {
                 });
             } else { // otherwise start scanning again
                 console.log('not in range');
-                noble.startScanning(serviceUUIDs, allowDuplicates);
-                console.log('start scanning for BLE devices with service id ' + SERVICE_UUID);
+                scheduleScanning(serviceUUIDs, allowDuplicates);
             }
         } else { // otherwise start scanning again
             console.log('wrong device name');
-            noble.startScanning(serviceUUIDs, allowDuplicates);
-            console.log('start scanning for BLE devices with service id ' + SERVICE_UUID);
+            scheduleScanning(serviceUUIDs, allowDuplicates);
         }
     });
+}
+
+function scheduleScanning(serviceUUIDs, allowDuplicates) {
+    setTimeout(function () {
+        noble.startScanning(serviceUUIDs, allowDuplicates);
+        console.log('start scanning for BLE devices with service id ' + SERVICE_UUID);
+    }, 2000);
 }
