@@ -17,12 +17,12 @@ border-bottom: 1px solid grey;
     /* border-bottom: 1px solid black; */
 }
 
-busInformation {
+#busInformation {
     width: 100%;
     color: black;
 }
 
-table {
+#busstop table {
     border: 1px solid grey;
     border-bottom: 0px;
     color: white;
@@ -34,11 +34,11 @@ table {
     text-align: center;
 }
 
-tbody {
+#busstop tbody {
     width: 100%;
 }
 
-tr {
+#busstop tr {
     height: 40px;
 }
 
