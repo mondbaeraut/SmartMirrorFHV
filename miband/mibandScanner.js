@@ -12,11 +12,10 @@ var RSSI_THRESHOLD = -70;
 
 // load values via bluetooth
 module.exports.startScanning = function () {
-    // start scanning when function is called
     var serviceUUIDs = [SERVICE_UUID]; // default: [] => all
     var allowDuplicates = false; // default: false
 
-    // stop scanning when bluetooth is powerded off
+    // stop scanning when bluetooth is powered off and start when its on
     noble.on('stateChange', function (state) {
         if (state === 'poweredOff') {
             noble.stopScanning();
@@ -27,7 +26,7 @@ module.exports.startScanning = function () {
         }
     });
 
-    // when device is detected read data
+    // read data when device is discovered
     noble.on('discover', function (peripheral) {
         noble.stopScanning();
         console.log('--- BLE Device Found ---');
@@ -44,7 +43,6 @@ module.exports.startScanning = function () {
                     }
 
                     console.log('connected to peripheral: ' + peripheral.uuid);
-
                     peripheral.discoverServices([SERVICE_UUID], function (error, services) {
                         if (error) {
                             console.error('error discovering service', error);
@@ -52,7 +50,6 @@ module.exports.startScanning = function () {
 
                         var deviceInformationService = services[0];
                         console.log('discovered device information service ' + services);
-
                         deviceInformationService.discoverCharacteristics([REALTIME_STEPS_UUID], function (error, characteristics) {
                             var realtimeStepsCharacteristic = characteristics[0];
                             console.log('discovered realtime steps characteristic');
@@ -65,43 +62,40 @@ module.exports.startScanning = function () {
                                         console.error('error reading realtime steps characteristic', error);
                                     }
 
-                                    peripheral.disconnect();
+                                    peripheral.disconnect(); // otherwise errors occur on next connect
 
                                     var steps = (data[3] << 24) | (data[2] << 16) | (data[1] << 8) | data[0];
-
                                     var data = { uuid: peripheral.uuid, rssi: peripheral.rssi, steps: steps };
-
                                     console.log(data);
 
+                                    // database operations
                                     database.getDailyBandSteps(data.uuid).then(function (responseDb) {
-                                        console.log(JSON.stringify(responseDb));
+                                        console.log('DB response: ' + JSON.stringify(responseDb));
                                         var stepsOld = 0;
-                                        if (responseDb == '') {
-                                            console.log('no data found, inserting new record');
-                                            database.insertDailySteps(data.uuid, data.steps);
-                                        } else {
-                                            console.log('data found, updating record');
-                                            stepsOld = responseDb[0].steps;
-                                            database.updateDailySteps(data.uuid, data.steps);
-                                        }
-                                        data.stepsNew = data.steps - stepsOld;
-                                        database.getDailyStepsTotal().then(function (dailyStepsTotal) {
-                                            console.log(dailyStepsTotal, 'daily steps total');
-                                            data.dailyStepsTotal = dailyStepsTotal + data.stepsNew;
-                                            console.log(JSON.stringify(data));
 
-                                            // send to all sse connections
-                                            for (var i = 0; i < connectionsSSE.length; i++) {
-                                                connectionsSSE[i].sseSend(data)
-                                            }
+                                        if (responseDb != '') {
+                                            stepsOld = responseDb[0].steps;
+                                        }
+
+                                        database.insertUpdateDailySteps(responseDb, data.uuid, data.steps).then(function () {
+                                            data.stepsNew = data.steps - stepsOld;
+                                            database.getDailyStepsTotal().then(function (dailyStepsTotal) {
+                                                data.dailyStepsTotal = dailyStepsTotal + data.stepsNew; // add new steps, because insert / update is async
+                                                console.log(JSON.stringify(data));
+
+                                                // send to all sse connections
+                                                for (var i = 0; i < connectionsSSE.length; i++) {
+                                                    connectionsSSE[i].sseSend(data)
+                                                }
+
+                                                noble.startScanning(serviceUUIDs, allowDuplicates);
+                                                console.log('start scanning for BLE devices with service id ' + SERVICE_UUID);
+                                            });
                                         });
+
                                     }, function (error) {
                                         console.error(error);
                                     });
-
-
-
-                                    console.log('data read');
                                 });
                             }
                         });
@@ -109,12 +103,13 @@ module.exports.startScanning = function () {
                 });
             } else { // otherwise start scanning again
                 console.log('not in range');
+                noble.startScanning(serviceUUIDs, allowDuplicates);
+                console.log('start scanning for BLE devices with service id ' + SERVICE_UUID);
             }
         } else { // otherwise start scanning again
             console.log('wrong device name');
+            noble.startScanning(serviceUUIDs, allowDuplicates);
+            console.log('start scanning for BLE devices with service id ' + SERVICE_UUID);
         }
-
-        noble.startScanning(serviceUUIDs, allowDuplicates);
-        console.log('start scanning for BLE devices with service id ' + SERVICE_UUID);
     });
 }
