@@ -178,12 +178,18 @@ function rand(min, max) {
 	return Math.random() * (max - min) + min;
 }
 setInterval( function() {
-	let leaves = document.querySelectorAll(".leaf:not(.leafFallAnimation)");
-	if(leaves.length > 0) {
-		let i = Math.round(rand(0, leaves.length));
-		leaves[i].classList.remove("leafReappearAnimation");
-		leaves[i].classList.add("leafFallAnimation");
-		
+	let apples = document.querySelectorAll(".apple:not(.appleFallAnimation)");
+	if(apples.length > 0) {
+		let i = Math.round(rand(0, apples.length));
+		apples[i].classList.add("appleFallAnimation");
+	} else {	
+		let leaves = document.querySelectorAll(".leaf:not(.leafFallAnimation)");
+		if(leaves.length > 0) {
+			let i = Math.round(rand(0, leaves.length));
+			leaves[i].classList.remove("leafReappearAnimation");
+			leaves[i].classList.add("leafFallAnimation");
+			
+		}
 	}
 }, 10000);
 
