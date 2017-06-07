@@ -73,68 +73,72 @@ module.exports.startScanning = !noble ? function () {
                     }, 10000);
 
                     console.log('connected to peripheral: ' + peripheral.uuid);
-                    peripheral.discoverServices([SERVICE_UUID], function (error, services) {
-                        if (error) {
-                            console.error('error discovering service', error);
-                        }
+                    try {
+                        peripheral.discoverServices([SERVICE_UUID], function (error, services) {
+                            if (error) {
+                                console.error('error discovering service', error);
+                            }
 
-                        var deviceInformationService = services[0];
-                        console.log('discovered device information service ' + services);
-                        deviceInformationService.discoverCharacteristics([REALTIME_STEPS_UUID], function (error, characteristics) {
-                            var realtimeStepsCharacteristic = characteristics[0];
-                            console.log('discovered realtime steps characteristic');
-                            if (realtimeStepsCharacteristic == null) {
-                                noble.stopScanning();
-                                console.error('Steps characteristic not found!');
-                            } else {
-                                realtimeStepsCharacteristic.read(function (error, data) {
-                                    if (error) {
-                                        console.error('error reading realtime steps characteristic', error);
-                                    }
-
-                                    peripheral.disconnect(); // otherwise errors occur on next connect
-
-                                    var steps = (data[3] << 24) | (data[2] << 16) | (data[1] << 8) | data[0];
-                                    var data = { uuid: peripheral.uuid, rssi: peripheral.rssi, steps: steps };
-                                    console.log(data);
-
-                                    // database operations
-                                    database.getDailyBandSteps(data.uuid).then(function (responseDb) {
-                                        console.log('DB response: ' + JSON.stringify(responseDb));
-                                        var stepsOld = 0;
-
-                                        if (responseDb != '') {
-                                            stepsOld = responseDb[0].steps;
+                            var deviceInformationService = services[0];
+                            console.log('discovered device information service ' + services);
+                            deviceInformationService.discoverCharacteristics([REALTIME_STEPS_UUID], function (error, characteristics) {
+                                var realtimeStepsCharacteristic = characteristics[0];
+                                console.log('discovered realtime steps characteristic');
+                                if (realtimeStepsCharacteristic == null) {
+                                    noble.stopScanning();
+                                    console.error('Steps characteristic not found!');
+                                } else {
+                                    realtimeStepsCharacteristic.read(function (error, data) {
+                                        if (error) {
+                                            console.error('error reading realtime steps characteristic', error);
                                         }
 
-                                        database.insertUpdateDailySteps(responseDb, data.uuid, data.steps).then(function () {
-                                            data.stepsNew = data.steps - stepsOld;
-                                            database.getDailyStepsTotal().then(function (dailyStepsTotal) {
-                                                data.dailyStepsTotal = dailyStepsTotal; // add new steps, because insert / update is async
-                                                console.log(JSON.stringify(data));
+                                        peripheral.disconnect(); // otherwise errors occur on next connect
 
-                                                // send to all sse connections
-                                                if (data.stepsNew > 0) {
-                                                    for (var i = 0; i < connectionsSSE.length; i++) {
-                                                        connectionsSSE[i].sseSend(data)
+                                        var steps = (data[3] << 24) | (data[2] << 16) | (data[1] << 8) | data[0];
+                                        var data = { uuid: peripheral.uuid, rssi: peripheral.rssi, steps: steps };
+                                        console.log(data);
+
+                                        // database operations
+                                        database.getDailyBandSteps(data.uuid).then(function (responseDb) {
+                                            console.log('DB response: ' + JSON.stringify(responseDb));
+                                            var stepsOld = 0;
+
+                                            if (responseDb != '') {
+                                                stepsOld = responseDb[0].steps;
+                                            }
+
+                                            database.insertUpdateDailySteps(responseDb, data.uuid, data.steps).then(function () {
+                                                data.stepsNew = data.steps - stepsOld;
+                                                database.getDailyStepsTotal().then(function (dailyStepsTotal) {
+                                                    data.dailyStepsTotal = dailyStepsTotal; // add new steps, because insert / update is async
+                                                    console.log(JSON.stringify(data));
+
+                                                    // send to all sse connections
+                                                    if (data.stepsNew > 0) {
+                                                        for (var i = 0; i < connectionsSSE.length; i++) {
+                                                            connectionsSSE[i].sseSend(data)
+                                                        }
                                                     }
-                                                }
 
-                                                // clear the disconnect timeout
-                                                clearTimeout(disconnectTimeout);
+                                                    // clear the disconnect timeout
+                                                    clearTimeout(disconnectTimeout);
 
-                                                noble.startScanning(serviceUUIDs, allowDuplicates);
-                                                console.log('start scanning for BLE devices with service id ' + SERVICE_UUID);
+                                                    noble.startScanning(serviceUUIDs, allowDuplicates);
+                                                    console.log('start scanning for BLE devices with service id ' + SERVICE_UUID);
+                                                });
                                             });
-                                        });
 
-                                    }, function (error) {
-                                        console.error(error);
+                                        }, function (error) {
+                                            console.error(error);
+                                        });
                                     });
-                                });
-                            }
+                                }
+                            });
                         });
-                    });
+                    } catch (error) {
+                        console.error(error);
+                    }
                 });
             } else { // otherwise start scanning again
                 console.log('not in range');
