@@ -1,84 +1,67 @@
 #calendar{
-    /* background: white; */
-    width: 100%;
-    margin-top: 200px;
-    margin-left: 43px;
+    grid-column: left;
+    grid-row: middle;
+    color: white;
 }
 #calendarHead{
-
-}
-#calendarHeadH{
-    width: 100%;
     font-size: 69px;
-    color: black;
-    /* padding: 20px; */
     border-bottom: 1px solid grey;
-    color: white;
 }
-#calendarEvent {
-    width: 100%;
-    /* height: 100%; */
-    /* margin-left: 0%; */
-    float: left;
-    border-bottom: 1px solid grey;
-    border-right: 1px solid grey;
-    /* border-right: solid; */
-    /* background: black; */
+#calendarEvents {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-columns: 20% 80%;
 }
 
-#calendarDatetime {
-    float: left;
-    /* border: 1px dotted white; */
-    padding: 5px;
-    text-align: center;
-    /* font-weight: bold; */
-    height: 75px;
-    width: 19%;
-    /* background-color: #fff; */
-    color: white;
-    /* border-bottom: 1px solid black; */
-    /* border-top: 1px solid black; */
+.calendarEvent {
+    width: 100%;
     border-left: 1px solid grey;
     border-right: 1px solid grey;
+    border-bottom: 1px solid grey;
 }
 
-#calendarDay {
+.calendarDatetime {
+    display: inline-block;
+    text-align: center;
+    width: 20%;
+    border-right: 1px solid grey;
+}
+
+.calendarDay {
     font-size: 40px;
 }
 
-#calendarMonth {
+.calendarMonth {
     font-size: 20px;
 }
 
-#calendarInformation {
-    float: left;
+.calendarInformation {
+    display: inline-block;
     border: 1px solid black;
-    padding: 5px;
     height: 75px;
-    width: 73.5%;
+    width: 70%;
 }
 
-#calendarTitle {
+.calendarTitle {
     font-weight: bold;
     font-size: 22px;
     padding: 3px 5px;
-    /* width: 190px; */
     white-space: nowrap;
     overflow: hidden;
 }
 
-#calendarTime {
+.calendarTime {
     font-size: 15px;
-    padding: 0px 5px;
+    padding: 0 5px;
     width: 190px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
-#calendarLocation {
+.calendarLocation {
     font-size: 15px;
-    padding: 0px 5px;
+    padding: 0 5px;
     width: 100%;
     white-space: nowrap;
     overflow: hidden;
