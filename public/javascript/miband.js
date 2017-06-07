@@ -10,9 +10,9 @@ $(document).ready(function () {
             let steps = $("#steps");
             steps.empty();
             steps.append(`
-                <p id="stepsNew">+${mibandData.stepsNew} Schritte!</p>
+                <p class="fade">+${mibandData.stepsNew} Schritte!</p>
                 <table>
-                    <tr>
+                    <tr class="fade">
                         <td>Persönlich</td>
                         <td>${mibandData.steps}</td>
                     </tr>

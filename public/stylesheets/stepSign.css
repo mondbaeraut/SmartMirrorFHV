@@ -33,7 +33,7 @@
     }
 }
 
-#steps > * {
+#steps > .fade {
     animation: fade;
     animation-duration: 5s;
     animation-fill-mode: forwards;
