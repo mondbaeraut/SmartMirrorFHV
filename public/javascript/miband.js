@@ -13,7 +13,7 @@ $(document).ready(function () {
                 <p class="fade">+${mibandData.stepsNew} Schritte!</p>
                 <table>
                     <tr class="fade">
-                        <td>Persönlich</td>
+                        <td>Eigene Schritte</td>
                         <td>${mibandData.steps}</td>
                     </tr>
                     <tr>
