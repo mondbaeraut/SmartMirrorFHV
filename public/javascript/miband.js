@@ -1,33 +1,43 @@
 $(document).ready(function () {
 
-  if (!!window.EventSource) {
-    var source = new EventSource('/sse/miband')
+    if (!!window.EventSource) {
+        let source = new EventSource('/sse/miband');
 
-    source.addEventListener('message', function (e) {
-      var mibandData = JSON.parse(e.data)
+        source.addEventListener('message', function (e) {
+            console.log("EventSource message");
+            let mibandData = JSON.parse(e.data);
 
-      $(`#steps`).empty();
-      $(`#steps`).append(`<div id="stepsHeader">Schritte</div>`);
-      $(`#steps`).append(`<div id="stepsGroup"><div id="stepsLeft">G</div><div id="stepsGroupText">
-    `+ mibandData.dailyStepsTotal + `</div></div>
-  <div id="stepsPersonal"><div id="stepsLeft">S</div><div id="stepsGroupText">`+ mibandData.steps + `</div></div>`);
+            let steps = $("#steps");
+            steps.empty();
+            steps.append(`
+                <p id="stepsNew">+${mibandData.stepsNew} Schritte!</p>
+                <table>
+                    <tr>
+                        <td>Persönlich</td>
+                        <td>${mibandData.steps}</td>
+                    </tr>
+                    <tr>
+                        <td>Gruppe</td>
+                        <td>${mibandData.dailyStepsTotal}</td>
+                    </tr>
+                </table>
+            `);
 
-    }, false)
+        }, false);
 
-    source.addEventListener('open', function (e) {
-      console.log("SSE Connected");
-    }, false)
+        source.addEventListener('open', function (e) {
+            console.log("SSE Connected");
+        }, false);
 
-    source.addEventListener('error', function (e) {
-      if (e.target.readyState == EventSource.CLOSED) {
-        console.log("Disconnected", e);
-      }
-      else if (e.target.readyState == EventSource.CONNECTING) {
-        console.log("Connecting...");
-      }
-    }, false)
-  } else {
-    console.log("Your browser doesn't support SSE");
-  }
-
+        source.addEventListener('error', function (e) {
+            if (e.target.readyState === EventSource.CLOSED) {
+                console.log("EventSource disconnected", e);
+            }
+            else if (e.target.readyState === EventSource.CONNECTING) {
+                console.log("EventSource connecting...");
+            }
+        }, false)
+    } else {
+        console.log("Your browser doesn't support SSE");
+    }
 });

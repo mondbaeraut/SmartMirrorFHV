@@ -29,6 +29,11 @@
 	transform-origin: bottom left;
 }
 
+.apple {
+	position: absolute;
+	transform-origin: bottom left;
+}
+
 @keyframes exampleAnimation {
 to {
 		transform: rotate(400deg);
