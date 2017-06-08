@@ -15,8 +15,7 @@ function callApi(dest_url) {
     });
     return result;
 }
-
-function loadBusStopInfo() {
+function createTable(){
     $(`#busstop`).empty();
     $(`#busstop`).append(`<div id="busHead"><div id="busHeadH"> Abfahrtszeiten</div></div><div id="busHeadInformation"><table id="bustable">`);
     var table = document.getElementById("bustable");
@@ -43,6 +42,10 @@ function loadBusStopInfo() {
     tr.appendChild(td4);
     tr.appendChild(td5);
     table.appendChild(tr);
+}
+
+function loadBusStopInfo() {
+
     var arrayPos = 0;
     for (var i = 0; i < BUSURLS.length; i++) {
         var result = callApi(BUSURLS[i]);
@@ -85,30 +88,7 @@ function loadBusStopInfo() {
 }
 
 function addBus(number, direction, busstop, depature, diffrence) {
-    var table = document.getElementById("bustable");
-    var tr = document.createElement('tr');
 
-    var td1 = document.createElement('td');
-    var td2 = document.createElement('td');
-    var td3 = document.createElement('td');
-    var td4 = document.createElement('td');
-    var td5 = document.createElement('td');
-    var text1 = document.createTextNode(diffrence);
-    var text2 = document.createTextNode(number);
-    var text3 = document.createTextNode(direction);
-    var text4 = document.createTextNode(busstop);
-    var text5 = document.createTextNode(depature);
-    td1.appendChild(text1);
-    td2.appendChild(text2);
-    td3.appendChild(text3);
-    td4.appendChild(text4);
-    td5.appendChild(text5)
-    tr.appendChild(td1);
-    tr.appendChild(td2);
-    tr.appendChild(td3);
-    tr.appendChild(td4);
-    tr.appendChild(td5);
-    table.appendChild(tr);
 }
 
 
