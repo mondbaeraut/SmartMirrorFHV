@@ -21,10 +21,15 @@
 
 #steps table {
     border: none;
+    width: 100%;
 }
 
 #steps td:first-child {
     text-align: left;
+}
+
+#steps td:last-child {
+    text-align: right;
 }
 
 @keyframes fade {
@@ -33,7 +38,7 @@
     }
 }
 
-#steps > * {
+#steps > .fade {
     animation: fade;
     animation-duration: 5s;
     animation-fill-mode: forwards;
