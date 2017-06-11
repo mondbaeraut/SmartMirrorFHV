@@ -8,7 +8,7 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="649.35901"
-   height="867.63776"
+   height="842.98401"
    version="1.1"
    id="svg580"
    sodipodi:docname="emptyTree.svg"
@@ -36,16 +36,18 @@
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
      inkscape:window-width="1920"
-     inkscape:window-height="1013"
+     inkscape:window-height="1147"
      id="namedview582"
      showgrid="false"
-     inkscape:zoom="0.2540366"
-     inkscape:cx="320.119"
-     inkscape:cy="464.70078"
-     inkscape:window-x="-9"
-     inkscape:window-y="-9"
+     inkscape:zoom="0.71852401"
+     inkscape:cx="-214.77167"
+     inkscape:cy="395.57285"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
      inkscape:window-maximized="1"
-     inkscape:current-layer="svg580" />
+     inkscape:current-layer="svg580"
+     inkscape:measure-start="0,0"
+     inkscape:measure-end="0,0" />
   <path
      d="m 288.396,195.308 c 0,0 49.105,-29.156 45.771,-93.311 0,0 3.168,-21.967 8.939,-30.441 0,0 -6.469,31.645 -3.25,49.667 0,0 -3.242,63.843 -50.18,86.372 0.001,0 -7.341,-7.982 -1.28,-12.287 z"
      id="path356"
@@ -525,8 +527,9 @@
        inkscape:connector-curvature="0" />
   </g>
   <path
-     d="m 225.822,842.984 c 0,0 69.775,55.471 152.828,0 0,0 -55.461,-281.008 -10.476,-584.201 0,0 21.706,-82.134 43.591,-101.854 0,0 -72.555,138.829 -111.994,74.74 0,0 -35.525,-67.069 -34.51,-188.99 0,0 -12.325,149.55 4.93,238.289 0,-0.001 39.439,142.969 -44.369,562.016 z"
+     d="m 225.822,842.984 c 0,0 78.71457,0 152.828,0 0,0 -55.461,-281.008 -10.476,-584.201 0,0 21.706,-82.134 43.591,-101.854 0,0 -72.555,138.829 -111.994,74.74 0,0 -35.525,-67.069 -34.51,-188.99 0,0 -12.325,149.55 4.93,238.289 0,-0.001 39.439,142.969 -44.369,562.016 z"
      id="path578"
      inkscape:connector-curvature="0"
-     style="fill:#c47117" />
+     style="fill:#c47117"
+     sodipodi:nodetypes="cccccccc" />
 </svg>

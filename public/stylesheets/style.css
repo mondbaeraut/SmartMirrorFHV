@@ -14,8 +14,8 @@ body {
     height: 1080px;
     width: 1920px;
     display: grid;
-    grid-template-columns: [left] 30%  40%  30% [right];
-    grid-template-rows: [top] 30% [middle] 30% [bottom] 30%;
+    grid-template-columns: [left] 30%  40%  [right] 30%;
+    grid-template-rows: [top] 20% [middle] 40% [bottom] 40%;
 }
 
 a {
@@ -24,11 +24,9 @@ a {
 
 #right {
     grid-column: right;
+    grid-row: span 3;
     position: relative;
-}
-
-#left {
-    grid-column: left;
+    overflow: ;
 }
 
 #clock {
