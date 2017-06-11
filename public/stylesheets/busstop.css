@@ -1,7 +1,6 @@
 #busstop {
-    margin-top: 285px;
-    width: 100%;
-    margin-left: 43px;
+    grid-row: bottom;
+    grid-column: left;
 }
 
 #busHead {
