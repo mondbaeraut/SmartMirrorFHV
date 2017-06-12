@@ -1,12 +1,8 @@
 #clockdate {
     width: 100%;
-    /* height: 250px; */
-    /* margin-left: 0%; */
-    float: left;
-    /* border-right: solid; */
+    grid-row: top;
+    grid-column: left;
     text-align: center;
-    padding-top: 20px;
-    margin-left: -44px;
 }
 
 #dgClock {

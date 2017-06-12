@@ -7,12 +7,12 @@ try {
 var database = require('./database');
 
 // Constants
-var REALTIME_STEPS_UUID = 'ff06';
-var SERVICE_UUID = 'fee0';
-var DEVICE_NAME = 'MI1S';
-var BATTERY_INFO_UUID = 'ff0c';
+const REALTIME_STEPS_UUID = 'ff06';
+const SERVICE_UUID = 'fee0';
+const DEVICE_NAME = 'MI1S';
+const BATTERY_INFO_UUID = 'ff0c';
 
-var RSSI_THRESHOLD = -70;
+const RSSI_THRESHOLD = -70;
 
 // load values via bluetooth
 module.exports.startScanning = !noble ? function () {
@@ -81,62 +81,74 @@ module.exports.startScanning = !noble ? function () {
 
                             var deviceInformationService = services[0];
                             console.log('discovered device information service ' + services);
-                            deviceInformationService.discoverCharacteristics([REALTIME_STEPS_UUID], function (error, characteristics) {
+                            deviceInformationService.discoverCharacteristics([REALTIME_STEPS_UUID, BATTERY_INFO_UUID], function (error, characteristics) {
                                 var realtimeStepsCharacteristic = characteristics[0];
-                                console.log('discovered realtime steps characteristic');
-                                if (realtimeStepsCharacteristic == null) {
-                                    noble.stopScanning();
-                                    console.error('Steps characteristic not found!');
+                                var batteryCharacteristic = characteristics[1];
+
+                                if (batteryCharacteristic == null) {
+                                    console.error('Battery characteristic not found!');
                                 } else {
-                                    realtimeStepsCharacteristic.read(function (error, data) {
-                                        if (error) {
-                                            console.error('error reading realtime steps characteristic', error);
-                                        }
+                                    batteryCharacteristic.read(function (error, data) {
+                                        var batteryLevel = data[0];
+                                        var batteryCharges = 0xffff & (0xff & data[7] | (0xff & data[8] << 8));
 
-                                        peripheral.disconnect(); // otherwise errors occur on next connect
+                                        console.log('discovered realtime steps characteristic');
+                                        if (realtimeStepsCharacteristic == null) {
+                                            console.error('Steps characteristic not found!');
+                                        } else {
+                                            realtimeStepsCharacteristic.read(function (error, data) {
+                                                if (error) {
+                                                    console.error('error reading realtime steps characteristic', error);
+                                                }
 
-                                        var steps = (data[3] << 24) | (data[2] << 16) | (data[1] << 8) | data[0];
-                                        var data = { uuid: peripheral.uuid, rssi: peripheral.rssi, steps: steps };
-                                        console.log(data);
+                                                peripheral.disconnect(); // otherwise errors occur on next connect
 
-                                        // database operations
-                                        database.getDailyBandSteps(data.uuid).then(function (responseDb) {
-                                            console.log('DB response: ' + JSON.stringify(responseDb));
-                                            var stepsOld = 0;
+                                                var steps = (data[3] << 24) | (data[2] << 16) | (data[1] << 8) | data[0];
+                                                var data = { uuid: peripheral.uuid, rssi: peripheral.rssi, steps: steps, batteryLevel: batteryLevel, batteryCharges:batteryCharges};
+                                                console.log(data);
 
-                                            if (responseDb != '') {
-                                                stepsOld = responseDb[0].steps;
-                                            }
+                                                // database operations
+                                                database.getDailyBandSteps(data.uuid).then(function (responseDb) {
+                                                    console.log('DB response: ' + JSON.stringify(responseDb));
+                                                    var stepsOld = 0;
 
-                                            database.insertUpdateDailySteps(responseDb, data.uuid, data.steps).then(function () {
-                                                data.stepsNew = data.steps - stepsOld;
-                                                database.getDailyStepsTotal().then(function (dailyStepsTotal) {
-                                                    data.dailyStepsTotal = dailyStepsTotal; // add new steps, because insert / update is async
-                                                    console.log(JSON.stringify(data));
-
-                                                    // send to all sse connections
-                                                    if (data.stepsNew > 0) {
-                                                        for (var i = 0; i < connectionsSSE.length; i++) {
-                                                            connectionsSSE[i].sseSend(data)
-                                                        }
+                                                    if (responseDb != '') {
+                                                        stepsOld = responseDb[0].steps;
                                                     }
 
-                                                    // clear the disconnect timeout
-                                                    clearTimeout(disconnectTimeout);
+                                                    database.insertUpdateDailySteps(responseDb, data.uuid, data.steps).then(function () {
+                                                        data.stepsNew = data.steps - stepsOld;
+                                                        database.getDailyStepsTotal().then(function (dailyStepsTotal) {
+                                                            data.dailyStepsTotal = dailyStepsTotal; // add new steps, because insert / update is async
+                                                            console.log(JSON.stringify(data));
 
-                                                    scheduleScanning(serviceUUIDs, allowDuplicates);
+                                                            // send to all sse connections
+                                                            if (data.stepsNew > 0) {
+                                                                for (var i = 0; i < connectionsSSE.length; i++) {
+                                                                    connectionsSSE[i].sseSend(data)
+                                                                }
+                                                            }
+
+                                                            // clear the disconnect timeout
+                                                            clearTimeout(disconnectTimeout);
+
+                                                            scheduleScanning(serviceUUIDs, allowDuplicates);
+                                                        });
+                                                    });
+
+                                                }, function (error) {
+                                                    console.error(error);
                                                 });
                                             });
-
-                                        }, function (error) {
-                                            console.error(error);
-                                        });
+                                        }
+                                    }, function (error) {
+                                        console.error(error);
                                     });
                                 }
                             });
                         });
                     } catch (error) {
-                        console.error(error);
+                        console.log(error);
                     }
                 });
             } else { // otherwise start scanning again
