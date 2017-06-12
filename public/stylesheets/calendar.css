@@ -2,12 +2,13 @@
     grid-column: left;
     grid-row: middle;
     color: white;
+    padding-left: 50px;
+    padding-top: 20px;
 }
 
 #calendarHead{
     font-size: 69px;
     border-bottom: 1px solid grey;
-    height: 25%;
 }
 
 #calendarEvents {
@@ -21,6 +22,7 @@
     border-right: 1px solid grey;
     border-left: 1px solid grey;
     border-bottom: 1px solid grey;
+    padding: 10px;
 }
 
 .calendarDay {
@@ -34,7 +36,7 @@
 .calendarInformation {
     border-right: 1px solid grey;
     border-bottom: 1px solid grey;
-    padding: 2px 5px;
+    padding: 10px;
 }
 
 .calendarTitle {

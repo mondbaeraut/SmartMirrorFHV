@@ -1,6 +1,8 @@
 #busstop {
     grid-row: bottom;
     grid-column: left;
+    padding-left: 50px;
+    padding-top:20px;
 }
 
 #busHead {

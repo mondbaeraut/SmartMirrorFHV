@@ -82,7 +82,7 @@ i {
 
 #weather h2 {
     margin: 0px;
-    margin-left: -115px;
+    /* margin-left: -115px; */
     color: grey;
     font-size: 34px;
     /* font-weight: 300; */

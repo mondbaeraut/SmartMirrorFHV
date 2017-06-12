@@ -26,7 +26,6 @@ a {
     grid-column: right;
     grid-row: span 3;
     position: relative;
-    overflow: ;
 }
 
 #clock {

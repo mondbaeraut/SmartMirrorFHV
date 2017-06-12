@@ -1,14 +1,16 @@
 #clockdate {
-    width: 100%;
+    /* width: 100%; */
     grid-row: top;
     grid-column: left;
-    text-align: center;
+    padding-top: 10px;
+    padding-left: 50px;
+    /* text-align: center; */
 }
 
 #dgClock {
     float: left;
     /* height: 75px; */
-    width: 100%;
+    /* width: 100%; */
     /* background: white; */
     /* padding-left: 26px; */
     /* padding-top: 0px; */
@@ -21,7 +23,7 @@
     /* font-weight: bold; */
     float: left;
     /* padding: 14px; */
-    padding-left: 15%;
+    /* padding-left: 15%; */
 }
 
 #dgClockMinuteText {

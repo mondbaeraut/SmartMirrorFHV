@@ -5,7 +5,7 @@ function loadBusStopInfo() {
 
     $.getJSON(BUSURL, function (data) {
         $("#busstop").empty();
-        $("#busstop").append(`<div id="busHead"><div id="busHeadH"> Abfahrtszeiten</div></div><div id="busHeadInformation"><table id="bustable">`);
+        $("#busstop").append("<div id='busHead'><div id='busHeadH'> Abfahrtszeiten</div></div><div id='busHeadInformation'><table id='bustable'>");
 
         var table = document.getElementById("bustable");
         var tr = document.createElement('tr');
