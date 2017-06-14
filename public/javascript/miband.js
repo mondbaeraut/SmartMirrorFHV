@@ -10,15 +10,19 @@ $(document).ready(function () {
             let steps = $("#steps");
             steps.empty();
             steps.append(`
-                <p class="fade">+${mibandData.stepsNew} Schritte!</p>
+                <p>+${mibandData.stepsNew} Schritte!</p>
                 <table>
-                    <tr class="fade">
+                    <tr>
                         <td>Eigene Schritte</td>
                         <td>${mibandData.steps}</td>
                     </tr>
                     <tr>
                         <td>Gruppe</td>
                         <td>${mibandData.dailyStepsTotal}</td>
+                    </tr>
+                    <tr>
+                        <td>Akkustand</td>
+                        <td>${mibandData.batteryLevel}%</td>
                     </tr>
                 </table>
             `);
