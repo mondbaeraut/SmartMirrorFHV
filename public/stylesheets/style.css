@@ -10,12 +10,13 @@ body {
     background-color: black;
     letter-spacing: 0.1em;
     margin: 0;
-    padding: 0;
-    height: 1080px;
-    width: 1920px;
+    padding: 50px;
+    height: 980px;
+    width: 1820px;
     display: grid;
     grid-template-columns: [left] 30%  40%  [right] 30%;
     grid-template-rows: [top] 20% [middle] 40% [bottom] 40%;
+    overflow: hidden;
 }
 
 a {
