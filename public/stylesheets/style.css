@@ -19,6 +19,10 @@ body {
     overflow: hidden;
 }
 
+.header {
+    font-size: 58px;
+}
+
 a {
     color: #00B7FF;
 }

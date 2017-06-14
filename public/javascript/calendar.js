@@ -6,7 +6,7 @@ const APIURL = 'api/calendar/';
 function reloadCalendarEvents() {
     $.get(APIURL, function (data) {
         $('#calendar').empty();
-        $(`#calendar`).append(`<div id="calendarHead">Veranstaltungen</div>`);
+        $(`#calendar`).append(`<div id="calendarHead" class="header">Veranstaltungen</div>`);
         $('#calendar').append(`<div id="calendarEvents"></div>`)
 
         for(var calendarEvent in data){

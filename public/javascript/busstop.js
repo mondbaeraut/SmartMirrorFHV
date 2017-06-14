@@ -5,7 +5,7 @@ function loadBusStopInfo() {
 
     $.getJSON(BUSURL, function (data) {
         $("#busstop").empty();
-        $("#busstop").append("<div id='busHead'><div id='busHeadH'> Abfahrtszeiten</div></div><div id='busHeadInformation'><table id='bustable'>");
+        $("#busstop").append("<div id='busHead'><div id='busHeadH' class='header'>Abfahrtszeiten</div></div><div id='busInformation'><table id='bustable'>");
 
         var table = document.getElementById("bustable");
         var tr = document.createElement('tr');
@@ -31,7 +31,7 @@ function loadBusStopInfo() {
         //var items = data.response.venue.tips.groups[0].items;
         //console.log(data);
         //console.log(data.information);
-        document.getElementById("busHeadInformation").appendChild(table);
+        document.getElementById("busInformation").appendChild(table);
         for (var busstop in data.information) { //console.log(data.information);
             //console.log(data.information[busstop]);
             if (busstop == 3) {
@@ -39,10 +39,6 @@ function loadBusStopInfo() {
             }
             addBus(data.information[busstop]);
         }
-        var table = document.createElement('table');
-
-        document.getElementById("busHeadInformation").appendChild(table);
-
     });
 
 }
