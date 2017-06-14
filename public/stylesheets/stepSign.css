@@ -41,8 +41,24 @@
     }
 }
 
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+#steps > * {
+    animation: fadeIn;
+    animation-duration: 2s;
+    animation-fill-mode: forwards;
+}
+
 #steps > .fade {
     animation: fade;
+    animation-delay: 30s;
     animation-duration: 5s;
     animation-fill-mode: forwards;
     animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
