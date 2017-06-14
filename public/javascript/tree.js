@@ -225,4 +225,4 @@ function removeLeaves(percentageToRemove) {
 		leaf.style.height = style.height;
 		leaf.classList.add("leafReappearAnimation");
 	}
-});
+}
