@@ -1,5 +1,5 @@
-//const BUSURL = "api/busstop/Koblach+Gasthaus+Harmonie";
-const BUSURL = "api/busstop/Bregenz+Bahnhof";
+    const BUSURL = "api/busstop/Koblach+Gasthaus+Harmonie";
+//const BUSURL = "api/busstop/Bregenz+Bahnhof";
 
 function loadBusStopInfo() {
 
@@ -28,9 +28,6 @@ function loadBusStopInfo() {
         tr.appendChild(td3);
         tr.appendChild(td4);
         table.appendChild(tr);
-        //var items = data.response.venue.tips.groups[0].items;
-        //console.log(data);
-        //console.log(data.information);
         document.getElementById("busInformation").appendChild(table);
         for (var busstop in data.information) { //console.log(data.information);
             //console.log(data.information[busstop]);
@@ -53,7 +50,9 @@ function addBus(data) {
     var direction = data.direction;
     var bustime = data.time;
     var diffrence = calcTimeDifToNow(bustime);
-
+    if(!diffrence){
+        diffrence = 0;
+    }
     var table = document.getElementById("bustable");
     var tr = document.createElement('tr');
 
@@ -79,5 +78,5 @@ function addBus(data) {
 
 $(document).ready(function () {
     loadBusStopInfo();
-    setInterval(loadBusStopInfo, 1000 * 60);
+    setInterval(loadBusStopInfo, 100 * 60);
 });
