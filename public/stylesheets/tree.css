@@ -62,3 +62,18 @@ from {
 	animation-duration: 3s;
 	animation-fill-mode: forwards;
 }
+
+@keyframes appleReappear{
+	from {
+		transform: scale(0);
+	}
+	to {
+			transform: scale(1);
+	}
+}
+
+.appleReappearAnimation{
+	animation-name: appleReappear;
+	animation-duration: 5s;
+	animation-fill-mode: forwards;
+}

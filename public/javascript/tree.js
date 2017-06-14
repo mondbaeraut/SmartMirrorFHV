@@ -177,6 +177,7 @@ setInterval( function() {
 	let apples = document.querySelectorAll(".apple:not(.appleFallAnimation)");
 	if (apples.length > 0) {
 		let i = Math.floor(rand(0, apples.length));
+		apples[i].classList.remove("appleReappearAnimation");
 		apples[i].classList.add("appleFallAnimation");
 	} else {	
 		let leaves = document.querySelectorAll(".leaf:not(.leafFallAnimation)");
@@ -193,9 +194,24 @@ function removeLeaves(percentageToRemove) {
 	console.log(totalLeaves.length);
 	let numberOfLeavesToRemove = Math.round((percentageToRemove/100) * totalLeaves.length);
 	console.log(numberOfLeavesToRemove);
-	var i;
-	for(i=0; i < numberOfLeavesToRemove; i++){
+	
+	// Check if apples should also reappear on the tree
+	let fallenLeaves = document.querySelectorAll(".leaf.leafFallAnimation");
+	let percentageOfLeavesAlreadyDown = (fallenLeaves.length * 100) / (totalLeaves.length);
+	console.log("Percentage of leaves already down: " + percentageOfLeavesAlreadyDown);
+	if(percentageOfLeavesAlreadyDown<=15) {
+		// Put apples back on tree
+		let fallenApples = document.querySelectorAll(".apple.appleFallAnimation");
 		
+		for(i = 0; i < fallenApples.length; i++){
+			let fallenApple = fallenApples[i];
+			fallenApple.classList.remove("appleFallAnimation");
+			fallenApple.classList.add("appleReappearAnimation");
+		}
+	}
+	
+	var i;
+	for(i=0; i < numberOfLeavesToRemove; i++){		
 		let leaves = document.querySelectorAll(".leaf.leafFallAnimation");
 		let i = Math.round(rand(0, leaves.length));
 		let leaf = leaves[i];
@@ -209,4 +225,4 @@ function removeLeaves(percentageToRemove) {
 		leaf.style.height = style.height;
 		leaf.classList.add("leafReappearAnimation");
 	}
-}
+});
