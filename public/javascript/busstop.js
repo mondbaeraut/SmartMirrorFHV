@@ -78,5 +78,5 @@ function addBus(data) {
 
 $(document).ready(function () {
     loadBusStopInfo();
-    setInterval(loadBusStopInfo, 100 * 60);
+    setInterval(loadBusStopInfo, 1000 * 50);
 });

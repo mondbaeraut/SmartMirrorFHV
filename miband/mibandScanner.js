@@ -12,7 +12,7 @@ const SERVICE_UUID = 'fee0';
 const DEVICE_NAME = 'MI1S';
 const BATTERY_INFO_UUID = 'ff0c';
 
-const RSSI_THRESHOLD = -70;
+const RSSI_THRESHOLD = -80; // about 1m distance
 
 // load values via bluetooth
 module.exports.startScanning = !noble ? function () {
