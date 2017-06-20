@@ -4,6 +4,10 @@ html {
     padding: 0;
 }
 
+* {
+    cursor: none !important;
+}
+
 body {
     font: 14px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
     color: white;
