@@ -26,6 +26,9 @@ $(document).ready(function () {
                     </tr>
                 </table>
             `);
+			
+			// Make the leaves rise when new steps incoming
+			removeLeaves(mibandData.stepsNew);
 
         }, false);
 
