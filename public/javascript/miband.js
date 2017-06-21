@@ -28,7 +28,7 @@ $(document).ready(function () {
             `);
 			
 			// Make the leaves rise when new steps incoming
-			removeLeaves(mibandData.stepsNew);
+			removeLeaves(mibandData.stepsNew/100);
 
         }, false);
 
