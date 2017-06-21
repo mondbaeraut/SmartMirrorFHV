@@ -2,7 +2,7 @@
 Description=SmartMirror
 
 [Service]
-ExecStart=/home/pi/SmartMirrorFHV/bin/www
+ExecStart=/home/pi/SmartMirrorFHV/run.sh
 Restart=always
 User=root
 Group=root
