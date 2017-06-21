@@ -5,6 +5,10 @@
 npm install
 ```
 
+```
+sudo systemctl enable /home/pi/SmartMirrorFHV/SmartMirror.service
+```
+
 ### Install Bluetooh Libraries for Noble
 as described here: https://www.npmjs.com/package/noble#prerequisites
 
