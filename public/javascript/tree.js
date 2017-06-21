@@ -187,7 +187,7 @@ setInterval( function() {
 			leaves[i].classList.add("leafFallAnimation");
 		}
 	}
-}, 10000);
+}, 270000);
 
 function removeLeaves(percentageToRemove) {
 	let totalLeaves = document.querySelectorAll(".leaf");
