@@ -170,5 +170,5 @@ function scheduleScanning(serviceUUIDs, allowDuplicates) {
     setTimeout(function () {
         noble.startScanning(serviceUUIDs, allowDuplicates);
         console.log('start scanning for BLE devices with service id ' + SERVICE_UUID);
-    }, 2000);
+    }, 500);
 }
