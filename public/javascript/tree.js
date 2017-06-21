@@ -190,6 +190,10 @@ setInterval( function() {
 }, 270000);
 
 function removeLeaves(percentageToRemove) {
+	if(percentageToRemove<1){
+		return;
+	}
+	
 	let totalLeaves = document.querySelectorAll(".leaf");
 	console.log(totalLeaves.length);
 	let numberOfLeavesToRemove = Math.round((percentageToRemove/100) * totalLeaves.length);
