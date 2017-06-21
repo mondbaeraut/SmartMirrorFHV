@@ -14,6 +14,13 @@ const BATTERY_INFO_UUID = 'ff0c';
 
 const RSSI_THRESHOLD = -80; // about 1m distance
 
+// tracker numbers
+var trackerNumbers = new Map();
+// uuid - tracker number
+trackerNumbers.set('6e886b1776174b52a504fd000b6ccc09', '1');
+trackerNumbers.set('77cdab9136fa40f4ae5f8400331ad47f', '2');
+trackerNumbers.set('eb0e115880d845d08d3d7b3ba549a38a', '3');
+
 // load values via bluetooth
 module.exports.startScanning = !noble ? function () {
     function sendDummy() {
@@ -107,7 +114,8 @@ module.exports.startScanning = !noble ? function () {
                                                     peripheral.disconnect(); // otherwise errors occur on next connect
 
                                                     var steps = (data[3] << 24) | (data[2] << 16) | (data[1] << 8) | data[0];
-                                                    var data = { uuid: peripheral.uuid, rssi: peripheral.rssi, steps: steps, batteryLevel: batteryLevel, batteryCharges: batteryCharges };
+                                                    var trackerNumber = trackerNumbers.get(peripheral.uuid);    // get the trackers number
+                                                    var data = { number: trackerNumber, uuid: peripheral.uuid, rssi: peripheral.rssi, steps: steps, batteryLevel: batteryLevel, batteryCharges: batteryCharges };
                                                     console.log(data);
 
                                                     // database operations
