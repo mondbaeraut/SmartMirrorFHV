@@ -10,7 +10,7 @@ $(document).ready(function () {
             let steps = $("#steps");
             steps.empty();
             steps.append(`
-                <p class="fade">Zähler ${mibandData.number} +${mibandData.stepsNew} Punkte!</p>
+                <p class="fade">Zähler ${mibandData.number} <br /> +${mibandData.stepsNew} Punkte!</p>
                 <table class="fade">
                     <tr>
                         <td>Eigene Punkte</td>

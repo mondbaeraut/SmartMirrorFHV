@@ -17,9 +17,9 @@ const RSSI_THRESHOLD = -80; // about 1m distance
 // tracker numbers
 var trackerNumbers = new Map();
 // uuid - tracker number
-trackerNumbers.set('6e886b1776174b52a504fd000b6ccc09', '1');
-trackerNumbers.set('77cdab9136fa40f4ae5f8400331ad47f', '2');
-trackerNumbers.set('eb0e115880d845d08d3d7b3ba549a38a', '3');
+trackerNumbers.set('c80f1087e943', '1');
+trackerNumbers.set('c80f1086bf65', '2');
+trackerNumbers.set('c80f1087e691', '3');
 
 // load values via bluetooth
 module.exports.startScanning = !noble ? function () {
