@@ -26,7 +26,7 @@ function clock() {
 
 
     var date = new Date();
-    document.getElementById("dgDateText").innerHTML = (day[date.getDay() - 1] + ", " + date.getDay() + " " + month[date.getMonth()] + " " + date.getFullYear());
+    document.getElementById("dgDateText").innerHTML = (day[date.getDay() - 1] + ", " + date.getDate() + " " + month[date.getMonth()] + " " + date.getFullYear());
     document.getElementById("dgClockHourText").innerHTML = (hours + ":");
     document.getElementById("dgClockMinuteText").innerHTML = (minutes);
     document.getElementById("dgClockSecondText").innerHTML = (seconds);
