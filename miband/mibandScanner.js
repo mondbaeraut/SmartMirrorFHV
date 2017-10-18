@@ -15,9 +15,9 @@ try {
     var Characteristic = require('noble/lib/characteristic.js');
     Characteristic.prototype.readAsync = promisify(Characteristic.prototype.read);
 } catch (e) {
-    console.error("Just run npm install lul", e);
+    console.error("BT: Just run npm install lul", e);
 }
-let database = require('./database');
+let Database = require('./database');
 
 // Constants
 const REALTIME_STEPS_UUID = 'ff06';
@@ -50,18 +50,19 @@ function startDummyScanning() {
     setInterval(sendDummy, 10000);
 }
 
-async function disconnectFunction() {
+async function forceDisconnect(peripheral) {
     if (peripheral.state != 'disconnected') {
         await peripheral.disconnectAsync();
-        console.log('disconnected from peripheral: ' + peripheral.uuid);
+        console.log(`BT: Forced disconnect from tracker #${trackerNumbers.get(peripheral.uuid)}.`);
     }
 }
 
 async function readDeviceInformation(peripheral) {
     await peripheral.connectAsync();
-    
+    console.log(`BT: Connected to tracker #${trackerNumbers.get(peripheral.uuid)}.`);
+
     // force disconnect in case of hang up
-    let disconnectTimeout = setTimeout(disconnectFunction, 10000);
+    let disconnectTimeout = setTimeout(() => forceDisconnect(peripheral), 10000);
 
     let services = await peripheral.discoverServicesAsync([SERVICE_UUID]);        
     let deviceInformationService = services[0];
@@ -80,11 +81,14 @@ async function readDeviceInformation(peripheral) {
     await peripheral.disconnectAsync();
     clearTimeout(disconnectTimeout);
 
-    return {
+    let result = {
         batteryLevel: batteryLevel,
         batteryCharges: batteryCharges,
         steps: steps
-    };    
+    };
+
+    console.log(`BT: Successfully read tracker #${trackerNumbers.get(peripheral.uuid)} information: ${JSON.stringify(result)}`);
+    return result;    
 }
 
 async function onDiscoverAsync(peripheral) {
@@ -97,22 +101,22 @@ async function onDiscoverAsync(peripheral) {
 
     // only read data from given device
     if (deviceName !== DEVICE_NAME) {
-        console.log(`Non-tracker device (${deviceName}) discovered.`);
+        console.log(`BT: Non-tracker device (${deviceName}) discovered.`);
     } else if (deviceRssi < RSSI_THRESHOLD) {
-        console.log(`Discovered tracker #${trackerNumber}, but was not in range (signal strength ${deviceRssi}).`);
+        console.log(`BT: Discovered tracker #${trackerNumber}, but was not in range (signal strength ${deviceRssi}).`);
     } else {        
-        console.log(`Discovered tracker #${trackerNumber} in range (signal strength ${deviceRssi}).`);
+        console.log(`BT: Discovered tracker #${trackerNumber} in range (signal strength ${deviceRssi}).`);
         try {
             let deviceInformation = await readDeviceInformation(peripheral);
 
-            let responseDb = await database.getDailyBandSteps(deviceUuid);
+            let responseDb = await Database.getDailyBandSteps(deviceUuid);
             let stepsOld = 0;
 
             if (responseDb != '') {
                 stepsOld = responseDb[0].steps;
             }
 
-            await database.insertUpdateDailySteps(responseDb, deviceUuid, deviceInformation.steps);
+            await Database.insertUpdateDailySteps(responseDb, deviceUuid, deviceInformation.steps);
                         
             let data = {
                 number: trackerNumber,
@@ -120,7 +124,7 @@ async function onDiscoverAsync(peripheral) {
                 batteryLevel: deviceInformation.batteryLevel,
                 batteryCharges: deviceInformation.batteryCharges,
                 stepsNew: deviceInformation.steps - stepsOld,
-                dailyStepsTotal: await database.getDailyStepsTotal()
+                dailyStepsTotal: await Database.getDailyStepsTotal()
             };
 
             if (data.stepsNew > 0) {
@@ -140,7 +144,7 @@ function startNobleScanningAsync() {
     Noble.on('stateChange', function (state) {
         if (state === 'poweredOff') {
             Noble.stopScanning();
-            console.error('Bluetooth has been turned off!');
+            console.error('BT: Bluetooth has been turned off!');
         } else {
             scheduleScanning();
         }
@@ -153,7 +157,7 @@ function startNobleScanningAsync() {
 function scheduleScanning() {
     setTimeout(function () {
         Noble.startScanning([SERVICE_UUID], false);
-        console.log('Start scanning for BLE devices with service id ' + SERVICE_UUID);
+        console.log('BT: Scanning for tracker...');
     }, 500);
 }
 
