@@ -15,6 +15,11 @@ database.initializeDatabase();
 var sse = require('./miband/sse');
 var sseRoute = require('./routes/sseMiband');
 connectionsSSE = []; // global variable for connections
+sendToAllSse = function (data) {
+  for (let i = 0; i < connectionsSSE.length; i++) {
+    connectionsSSE[i].sseSend(data);
+  }
+}
 var mibandScanner = require('./miband/mibandScanner');
 mibandScanner.startScanning();
 
