@@ -1,7 +1,7 @@
 $(document).ready(function () {
 
     if (!!window.EventSource) {
-        let source = new EventSource('/sse/miband');
+        let source = new ReconnectingEventSource('/sse/miband');
 
         source.addEventListener('message', function (e) {
             console.log("EventSource message");
