@@ -11,6 +11,7 @@ var apiBusStop = require('./routes/apiBusStop');
 
 var database = require('./miband/database');
 database.initializeDatabase();
+var proximity = require('./extensions/proximity');
 
 var sse = require('./miband/sse');
 var sseRoute = require('./routes/sseMiband');
@@ -21,7 +22,17 @@ sendToAllSse = function (data) {
   }
 }
 var mibandScanner = require('./miband/mibandScanner');
-mibandScanner.startScanning();
+
+const sendOnProximityOnly = false;
+if (sendOnProximityOnly) {
+  console.log("App: Scan and send only on proximity.");
+  proximity.onProximityChange(val => {
+    mibandScanner.startScanning(false);
+  })
+} else {
+  console.log("App: Scan and send always.");
+  mibandScanner.startScanning(true);
+}
 
 var app = express();
 
