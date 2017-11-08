@@ -51,7 +51,9 @@ function startDummyScanning() {
 }
 
 async function forceDisconnect(peripheral) {
+    console.log(`BT: Testing force disconnect from tracker #${trackerNumbers.get(peripheral.uuid)}.`);
     if (peripheral.state != 'disconnected') {
+        console.log(`BT: Forcing disconnect from tracker #${trackerNumbers.get(peripheral.uuid)}.`);
         await peripheral.disconnectAsync();
         console.log(`BT: Forced disconnect from tracker #${trackerNumbers.get(peripheral.uuid)}.`);
     }
