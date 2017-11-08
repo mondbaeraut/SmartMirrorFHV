@@ -10,10 +10,13 @@
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.0",
     "express": "~4.14.1",
+    "highcharts": "^6.0.2",
     "ical": "^0.5.0",
+    "install": "^0.10.1",
     "jade": "~1.11.0",
     "morgan": "~1.7.0",
     "noble": "^1.8.0",
+    "npm": "^5.5.1",
     "scrape-it": "^3.3.2",
     "serve-favicon": "~2.3.2",
     "sqlite3": "^3.1.8"
