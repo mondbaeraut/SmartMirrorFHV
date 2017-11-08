@@ -10,11 +10,17 @@
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.0",
     "express": "~4.14.1",
+    "highcharts": "^6.0.2",
     "ical": "^0.5.0",
+    "install": "^0.10.1",
     "jade": "~1.11.0",
     "morgan": "~1.7.0",
     "noble": "^1.8.0",
+<<<<<<< HEAD
+    "npm": "^5.5.1",
+=======
     "reconnecting-eventsource": "^1.0.1",
+>>>>>>> 1841644391d626c1e3977a7f312c80b0d2c9f793
     "scrape-it": "^3.3.2",
     "serialport": "^6.0.4",
     "serve-favicon": "~2.3.2",
