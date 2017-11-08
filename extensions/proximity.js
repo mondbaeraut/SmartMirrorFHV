@@ -10,6 +10,7 @@ let callbacks = [];
 
 port.on("data", data => {
     console.log(`Proximity: ${data}`)
+    callbacks.forEach(callback => callback());
 });
 
 module.exports.onProximityChange = function(callback) {
