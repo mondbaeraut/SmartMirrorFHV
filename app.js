@@ -12,6 +12,7 @@ var apiBusStop = require('./routes/apiBusStop');
 var database = require('./miband/database');
 database.initializeDatabase();
 var proximity = require('./extensions/proximity');
+var logger2 = require("./extensions/logger");
 
 var sse = require('./miband/sse');
 var sseRoute = require('./routes/sseMiband');
@@ -19,11 +20,15 @@ connectionsSSE = []; // global variable for connections
 sendToAllSse = function (data) {
   for (let i = 0; i < connectionsSSE.length; i++) {
     connectionsSSE[i].sseSend(data);
+    logger2.append("sseSend");
   }
 }
 var mibandScanner = require('./miband/mibandScanner');
 
-const sendOnProximityOnly = false;
+sendOnProximityOnly = false;
+useDiagram = true;
+currentLeafCount = -1;
+currentAppleCount = -1;
 if (sendOnProximityOnly) {
   console.log("App: Scan and send only on proximity.");
   proximity.onProximityChange(val => {
@@ -51,6 +56,16 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index);
 app.use('/api/calendar', apiCalendar);
 app.use('/api/busstop', apiBusStop);
+app.post('/api/leaves', function (req, res) {
+  currentLeafCount = req.query.current;
+  logger2.append("leavesChanged");
+  res.end();
+});
+app.post('/api/apples', function (req, res) {
+  currentAppleCount = req.query.current;
+  logger2.append("applesChanged");
+  res.end();
+});
 
 app.use(sse);
 app.use('/sse/miband', sseRoute);

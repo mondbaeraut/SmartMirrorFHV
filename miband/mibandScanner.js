@@ -18,6 +18,7 @@ try {
     console.error("BT: Just run npm install lul", e);
 }
 let Database = require('./database');
+let logger = require("../extensions/logger");
 
 // Constants
 const REALTIME_STEPS_UUID = 'ff06';
@@ -131,11 +132,13 @@ async function onDiscoverAsync(peripheral) {
                 dailyStepsTotal: await Database.getDailyStepsTotal()
             };
 
+            logger.append("trackerConnected");
             if (data.stepsNew > 0) {
                 sendToAllSse(data);
             }
         } catch (error) {
             console.error(error);
+            logger.append("trackerError");
         }
     }
     if (gKeepScanning) {

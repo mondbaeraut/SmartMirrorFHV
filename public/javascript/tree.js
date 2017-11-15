@@ -179,15 +179,35 @@ setInterval( function() {
 		let i = Math.floor(rand(0, apples.length));
 		apples[i].classList.remove("appleReappearAnimation");
 		apples[i].classList.add("appleFallAnimation");
+		postAppleLeaves();
 	} else {	
 		let leaves = document.querySelectorAll(".leaf:not(.leafFallAnimation)");
 		if(leaves.length > 0) {
 			let i = Math.round(rand(0, leaves.length));
 			leaves[i].classList.remove("leafReappearAnimation");
 			leaves[i].classList.add("leafFallAnimation");
+			postCurrentLeaves();
 		}
 	}
 }, 270000);
+
+function postCurrentLeaves() {
+	let currentLeafCount = document.querySelectorAll(".leaf.leafReappearAnimation").length;
+	
+	$.ajax({
+		type: "POST",
+		url: "/api/leaves?current=" + encodeURIComponent(currentLeafCount)
+	});
+}
+
+function postAppleLeaves() {
+	let currentLeafCount = document.querySelectorAll(".apple.appleReappearAnimation").length;
+	
+	$.ajax({
+		type: "POST",
+		url: "/api/apples?current=" + encodeURIComponent(currentLeafCount)
+	});
+}
 
 function removeLeaves(percentageToRemove) {
 	if(percentageToRemove<1){
@@ -212,6 +232,7 @@ function removeLeaves(percentageToRemove) {
 			fallenApple.classList.remove("appleFallAnimation");
 			fallenApple.classList.add("appleReappearAnimation");
 		}
+		postAppleLeaves();
 	}
 	
 	var i;
@@ -228,5 +249,6 @@ function removeLeaves(percentageToRemove) {
 		leaf.style.width = style.width;
 		leaf.style.height = style.height;
 		leaf.classList.add("leafReappearAnimation");
+		postCurrentLeaves();
 	}
 }
