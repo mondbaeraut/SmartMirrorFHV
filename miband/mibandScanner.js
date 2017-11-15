@@ -34,6 +34,8 @@ trackerNumbers.set('c80f1087e943', '1');
 trackerNumbers.set('c80f1086bf65', '2');
 trackerNumbers.set('c80f1087e691', '3');
 
+let gKeepScanning;
+
 function startDummyScanning() {
     function sendDummy() {
         connectionsSSE.forEach(c => {
@@ -47,13 +49,14 @@ function startDummyScanning() {
         });
     }
     sendDummy();
-    setInterval(sendDummy, 10000);
+    if (gKeepScanning) {
+        setInterval(sendDummy, 10000);
+    }
 }
 
 async function forceDisconnect(peripheral) {
     console.log(`BT: Testing force disconnect from tracker #${trackerNumbers.get(peripheral.uuid)}.`);
     if (peripheral.state != 'disconnected') {
-        console.log(`BT: Forcing disconnect from tracker #${trackerNumbers.get(peripheral.uuid)}.`);
         await peripheral.disconnectAsync();
         console.log(`BT: Forced disconnect from tracker #${trackerNumbers.get(peripheral.uuid)}.`);
     }
@@ -61,7 +64,6 @@ async function forceDisconnect(peripheral) {
 
 async function readDeviceInformation(peripheral) {
     await peripheral.connectAsync();
-    console.log(`BT: Connected to tracker #${trackerNumbers.get(peripheral.uuid)}.`);
 
     // force disconnect in case of hang up
     let disconnectTimeout = setTimeout(() => forceDisconnect(peripheral), 10000);
@@ -136,10 +138,12 @@ async function onDiscoverAsync(peripheral) {
             console.error(error);
         }
     }
-    scheduleScanning();    
+    if (gKeepScanning) {
+        scheduleScanning();            
+    }
 }
 
-function startNobleScanningAsync() {
+function startNobleScanning() {
     // start scanning when function is called
 
     // stop scanning when bluetooth is powered off and start when its on
@@ -164,4 +168,11 @@ function scheduleScanning() {
 }
 
 // load values via bluetooth
-module.exports.startScanning = !Noble ? startDummyScanning : startNobleScanningAsync;
+module.exports.startScanning = function(keepScanning) {
+    gKeepScanning = keepScanning;
+    if (Noble) {
+        startNobleScanning();
+    } else {
+        startDummyScanning();
+    }
+}
