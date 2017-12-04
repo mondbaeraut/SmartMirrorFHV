@@ -64,8 +64,12 @@ var chart = Highcharts.chart('chart', {
 
     }]
 });
-
-function updateSteps(value) {
+function resetChart(){
+    chart.series[0].update({
+        data: [0]
+    });
+}
+function updateStepsForChart(value) {
     steps += value;
     chart.series[0].update({
         data: [steps]

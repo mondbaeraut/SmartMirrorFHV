@@ -26,7 +26,7 @@ function onReset(e) {
             currentMode = "CHART";
             document.getElementById(treeContainerId).style.display = "none";
             document.getElementById(chartContainerId).style.display = "block";
-            // TODO
+            resetChart();
             break;
         case "TREE":
             document.getElementById(treeContainerId).style.display = "block";
@@ -42,7 +42,7 @@ function onReset(e) {
 function onSteps(e) {
     switch (currentMode) {
         case "CHART":
-            // TODO
+            onStepsChart(e);
             break;
         case "TREE":
             onStepsTree(e);
@@ -51,7 +51,10 @@ function onSteps(e) {
             console.error("Not a valid mode.", currentMode);
     }
 }
-
+function onStepsChart(e){
+    let stepCount = parseInt(e.data);
+    updateStepsForChart(stepCount);
+}
 function onStepsTree(e) {
     let stepCount = parseInt(e.data);
 
