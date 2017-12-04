@@ -156,57 +156,63 @@ class AppleInitializer {
 	}
 }
 
-let container = document.getElementById("right");
-let overlay = document.getElementById("overlay");
-let leafDimensions = {width: 49, height: 71};
-new LeafDrawer(container, overlay, leafDimensions);
+function treeInit(timeoutInterval) {
+    let container = document.getElementById("treeContainer");
+	let overlay = document.getElementById("overlay");
+	let leafDimensions = {width: 49, height: 71};
+	new LeafDrawer(container, overlay, leafDimensions);
 
-fetch("/resources/leaves.json")
-	.then(response => response.json())
-	.then(stylesJson => new LeafInitializer(stylesJson, container));
+    // remove previous stuff
+    Array.from(container.getElementsByClassName("leaf")).forEach(leaf => leaf.remove());
+    Array.from(container.getElementsByClassName("apple")).forEach(leaf => leaf.remove());
 
-fetch("/resources/apples.json")
-    .then(response => response.json())
-    .then(stylesJson => new AppleInitializer(stylesJson, container));
+	fetch("/resources/leaves.json")
+		.then(response => response.json())
+		.then(stylesJson => new LeafInitializer(stylesJson, container));
 
-function rand(min, max) {
-	return Math.random() * (max - min) + min;
+	fetch("/resources/apples.json")
+		.then(response => response.json())
+		.then(stylesJson => new AppleInitializer(stylesJson, container));
+
+	return setInterval( function() {
+		let apples = document.querySelectorAll(".apple:not(.appleFallAnimation)");
+		if (apples.length > 0) {
+			let i = Math.floor(rand(0, apples.length));
+			apples[i].classList.remove("appleReappearAnimation");
+			apples[i].classList.add("appleFallAnimation");
+			postAppleLeaves();
+		} else {
+			let leaves = document.querySelectorAll(".leaf:not(.leafFallAnimation)");
+			if(leaves.length > 0) {
+				let i = Math.round(rand(0, leaves.length));
+				leaves[i].classList.remove("leafReappearAnimation");
+				leaves[i].classList.add("leafFallAnimation");
+				postCurrentLeaves();
+			}
+		}
+	}, timeoutInterval);
 }
 
-setInterval( function() {
-	let apples = document.querySelectorAll(".apple:not(.appleFallAnimation)");
-	if (apples.length > 0) {
-		let i = Math.floor(rand(0, apples.length));
-		apples[i].classList.remove("appleReappearAnimation");
-		apples[i].classList.add("appleFallAnimation");
-		postAppleLeaves();
-	} else {	
-		let leaves = document.querySelectorAll(".leaf:not(.leafFallAnimation)");
-		if(leaves.length > 0) {
-			let i = Math.round(rand(0, leaves.length));
-			leaves[i].classList.remove("leafReappearAnimation");
-			leaves[i].classList.add("leafFallAnimation");
-			postCurrentLeaves();
-		}
-	}
-}, 270000);
+function rand(min, max) {
+    return Math.random() * (max - min) + min;
+}
 
 function postCurrentLeaves() {
 	let currentLeafCount = document.querySelectorAll(".leaf.leafReappearAnimation").length;
-	
+	/*
 	$.ajax({
 		type: "POST",
 		url: "/api/leaves?current=" + encodeURIComponent(currentLeafCount)
-	});
+	});*/
 }
 
 function postAppleLeaves() {
 	let currentLeafCount = document.querySelectorAll(".apple.appleReappearAnimation").length;
-	
+	/*
 	$.ajax({
 		type: "POST",
-		url: "/api/apples?current=" + encodeURIComponent(currentLeafCount)
-	});
+		url: "/api/apples?current=" + encodeURIComponent(currentLeafCount),
+	});*/
 }
 
 function removeLeaves(percentageToRemove) {
