@@ -10,18 +10,18 @@ start();
 
 // functions
 function start() {
-    let eventSource = new EventSource(eventSourceUrl);
-    eventSource.addEventListener("reset", onReset);
-    eventSource.addEventListener("steps", onSteps);
+    const socket = io();
+    socket.on("reset", onReset);
+    socket.on("steps", onSteps);
 }
 
-function onReset(e) {
-    console.log("Reset", e.data);
+function onReset(msg) {
+    console.log("Reset", msg);
     if (timeoutId) {
         clearTimeout(timeoutId);
         timeoutId = null;
     }
-    switch (e.data) {
+    switch (msg) {
         case "CHART":
             currentMode = "CHART";
             document.getElementById(treeContainerId).style.display = "none";
@@ -39,24 +39,24 @@ function onReset(e) {
     }
 }
 
-function onSteps(e) {
+function onSteps(msg) {
     switch (currentMode) {
         case "CHART":
-            onStepsChart(e);
+            onStepsChart(msg);
             break;
         case "TREE":
-            onStepsTree(e);
+            onStepsTree(msg);
             break;
         default:
             console.error("Not a valid mode.", currentMode);
     }
 }
-function onStepsChart(e){
-    let stepCount = parseInt(e.data);
+function onStepsChart(msg){
+    let stepCount = parseInt(msg);
     updateStepsForChart(stepCount);
 }
-function onStepsTree(e) {
-    let stepCount = parseInt(e.data);
+function onStepsTree(msg) {
+    let stepCount = parseInt(msg);
 
     let steps = $("#steps");
     steps.empty();
