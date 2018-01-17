@@ -4,21 +4,21 @@ try {
     var Noble = require('noble'); // https://github.com/sandeepmistry/noble/wiki/Getting-started
 
     // promisify noble callbacks
-    var Peripheral = require('noble/lib/peripheral.js');
+    const Peripheral = require('noble/lib/peripheral.js');
+    const Service = require('noble/lib/service.js');
+    const Characteristic = require('noble/lib/characteristic.js');
+
     Peripheral.prototype.connectAsync = promisify(Peripheral.prototype.connect);
     Peripheral.prototype.disconnectAsync = promisify(Peripheral.prototype.disconnect);
     Peripheral.prototype.discoverServicesAsync = promisify(Peripheral.prototype.discoverServices);
 
-    var Service = require('noble/lib/service.js');
     Service.prototype.discoverCharacteristicsAsync = promisify(Service.prototype.discoverCharacteristics);
 
-    var Characteristic = require('noble/lib/characteristic.js');
     Characteristic.prototype.readAsync = promisify(Characteristic.prototype.read);
 } catch (e) {
     console.error("BT: Just run npm install lul", e);
 }
 let Database = require('./database');
-let logger = require("../extensions/logger");
 
 // Constants
 const REALTIME_STEPS_UUID = 'ff06';
@@ -97,6 +97,7 @@ async function readDeviceInformation(peripheral) {
 }
 
 async function onDiscoverAsync(peripheral) {
+    console.log("onDiscover");
     Noble.stopScanning();
 
     let deviceUuid = peripheral.uuid;
@@ -132,13 +133,11 @@ async function onDiscoverAsync(peripheral) {
                 dailyStepsTotal: await Database.getDailyStepsTotal()
             };
 
-            logger.append("trackerConnected");
             if (data.stepsNew > 0) {
                 sendToAllSse(data);
             }
         } catch (error) {
             console.error(error);
-            logger.append("trackerError");
         }
     }
     if (gKeepScanning) {
@@ -147,10 +146,12 @@ async function onDiscoverAsync(peripheral) {
 }
 
 function startNobleScanning() {
+    console.log("Noble scanning");
     // start scanning when function is called
 
     // stop scanning when bluetooth is powered off and start when its on
     Noble.on('stateChange', function (state) {
+        console.log(state);
         if (state === 'poweredOff') {
             Noble.stopScanning();
             console.error('BT: Bluetooth has been turned off!');
@@ -172,6 +173,7 @@ function scheduleScanning() {
 
 // load values via bluetooth
 module.exports.startScanning = function(keepScanning) {
+    console.log("startScanning");
     gKeepScanning = keepScanning;
     if (Noble) {
         startNobleScanning();
