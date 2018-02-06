@@ -1,5 +1,6 @@
 // Modules
 const { promisify } = require('util');
+const { EventEmitter } = require('events');
 try {
     var Noble = require('noble'); // https://github.com/sandeepmistry/noble/wiki/Getting-started
 
@@ -28,36 +29,22 @@ const BATTERY_INFO_UUID = 'ff0c';
 
 const RSSI_THRESHOLD = -80; // about 1m distance
 
-// tracker numbers
-var trackerNumbers = new Map();
-// uuid - tracker number
+const trackerNumbers = new Map(); // uuid - tracker number
 trackerNumbers.set('c80f1087e943', '1');
 trackerNumbers.set('c80f1086bf65', '2');
 trackerNumbers.set('c80f1087e691', '3');
 
-let gKeepScanning;
-
-function startDummyScanning() {
-    function sendDummy() {
-        connectionsSSE.forEach(c => {
-            c.sseSend({
-                "uuid": "77cdab9136fa40f4ae5f8400331ad47f",
-                "rssi": -74,
-                "steps": 87,
-                "stepsNew": 0,
-                "dailyStepsTotal": 665
-            });
-        });
-    }
-    sendDummy();
-    if (gKeepScanning) {
-        setInterval(sendDummy, 10000);
+class MibandScanner extends EventEmitter {
+    start() {
+        startNobleScanning();
     }
 }
 
+const emitter = new MibandScanner();
+
 async function forceDisconnect(peripheral) {
     console.log(`BT: Testing force disconnect from tracker #${trackerNumbers.get(peripheral.uuid)}.`);
-    if (peripheral.state != 'disconnected') {
+    if (peripheral.state !== 'disconnected') {
         await peripheral.disconnectAsync();
         console.log(`BT: Forced disconnect from tracker #${trackerNumbers.get(peripheral.uuid)}.`);
     }
@@ -97,7 +84,6 @@ async function readDeviceInformation(peripheral) {
 }
 
 async function onDiscoverAsync(peripheral) {
-    console.log("onDiscover");
     Noble.stopScanning();
 
     let deviceUuid = peripheral.uuid;
@@ -118,7 +104,7 @@ async function onDiscoverAsync(peripheral) {
             let responseDb = await Database.getDailyBandSteps(deviceUuid);
             let stepsOld = 0;
 
-            if (responseDb != '') {
+            if (responseDb !== '') {
                 stepsOld = responseDb[0].steps;
             }
 
@@ -134,37 +120,33 @@ async function onDiscoverAsync(peripheral) {
             };
 
             if (data.stepsNew > 0) {
-                sendToAllSse(data);
+                emitter.emit('data', data);
             }
         } catch (error) {
             console.error(error);
         }
     }
-    if (gKeepScanning) {
-        scheduleScanning();            
-    }
+    startScanning();
 }
 
 function startNobleScanning() {
-    console.log("Noble scanning");
-    // start scanning when function is called
-
-    // stop scanning when bluetooth is powered off and start when its on
-    Noble.on('stateChange', function (state) {
-        console.log(state);
-        if (state === 'poweredOff') {
-            Noble.stopScanning();
-            console.error('BT: Bluetooth has been turned off!');
-        } else {
-            scheduleScanning();
-        }
-    });
-
     // read data when device is discovered
     Noble.on('discover', onDiscoverAsync);
+
+    // stop scanning when bluetooth is powered off and start when its on
+    if (Noble.state === 'poweredOn') {
+        startScanning();
+    }
+    Noble.on('stateChange', function (state) {
+        if (state === 'poweredOn') {
+            Noble.stopScanning();
+        } else {
+            startScanning();
+        }
+    });
 }
 
-function scheduleScanning() {
+function startScanning() {
     setTimeout(function () {
         Noble.startScanning([SERVICE_UUID], false);
         console.log('BT: Scanning for tracker...');
@@ -172,12 +154,4 @@ function scheduleScanning() {
 }
 
 // load values via bluetooth
-module.exports.startScanning = function(keepScanning) {
-    console.log("startScanning");
-    gKeepScanning = keepScanning;
-    if (Noble) {
-        startNobleScanning();
-    } else {
-        startDummyScanning();
-    }
-}
+module.exports = emitter;
