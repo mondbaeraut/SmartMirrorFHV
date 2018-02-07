@@ -30,8 +30,8 @@ io.on('connection', async function (socket) {
 });
 
 mibandScanner.start();
-mibandScanner.on('data', data => sockets.forEach(socket => socket.emit("data", data)));
+mibandScanner.on('steps', steps => sockets.forEach(socket => socket.emit("steps", steps)));
 
-setInterval(bluetoothHelper.restart, 10000);
+//setInterval(bluetoothHelper.restart, 10000);
 
 server.listen(3000);

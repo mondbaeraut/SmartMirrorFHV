@@ -16,6 +16,7 @@ function start() {
     socket.on("connect", () => console.log("Socket connected."));
     socket.on("disconnect", reason => console.log("Socket disconnected.", reason));
     socket.on("data", data => console.log(data));
+    onReset('TREE');
 }
 
 function onReset(msg) {
@@ -59,7 +60,8 @@ function onStepsChart(msg){
     updateStepsForChart(stepCount);
 }
 function onStepsTree(msg) {
-    let stepCount = parseInt(msg);
+    console.log(msg);
+    let stepCount = msg.stepsNew;
 
     let steps = $("#steps");
     steps.empty();

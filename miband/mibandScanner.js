@@ -36,6 +36,7 @@ trackerNumbers.set('c80f1087e691', '3');
 
 class MibandScanner extends EventEmitter {
     start() {
+        console.log('BT: start');
         startNobleScanning();
     }
 }
@@ -51,10 +52,15 @@ async function forceDisconnect(peripheral) {
 }
 
 async function readDeviceInformation(peripheral) {
-    await peripheral.connectAsync();
+    if (peripheral.state !== 'connected') {
+        await peripheral.connectAsync();
+    } else {
+        console.log('BT: Already connected...');
+        await forceDisconnect(peripheral);
+    }
 
     // force disconnect in case of hang up
-    let disconnectTimeout = setTimeout(() => forceDisconnect(peripheral), 10000);
+    //let disconnectTimeout = setTimeout(() => forceDisconnect(peripheral), 10000);
 
     let services = await peripheral.discoverServicesAsync([SERVICE_UUID]);        
     let deviceInformationService = services[0];
@@ -71,7 +77,7 @@ async function readDeviceInformation(peripheral) {
     let steps = (stepData[3] << 24) | (stepData[2] << 16) | (stepData[1] << 8) | stepData[0];
 
     await peripheral.disconnectAsync();
-    clearTimeout(disconnectTimeout);
+    //clearTimeout(disconnectTimeout);
 
     let result = {
         batteryLevel: batteryLevel,
@@ -104,7 +110,7 @@ async function onDiscoverAsync(peripheral) {
             let responseDb = await Database.getDailyBandSteps(deviceUuid);
             let stepsOld = 0;
 
-            if (responseDb !== '') {
+            if (responseDb != '') {
                 stepsOld = responseDb[0].steps;
             }
 
@@ -120,7 +126,7 @@ async function onDiscoverAsync(peripheral) {
             };
 
             if (data.stepsNew > 0) {
-                emitter.emit('data', data);
+                emitter.emit('steps', data);
             }
         } catch (error) {
             console.error(error);
@@ -134,22 +140,22 @@ function startNobleScanning() {
     Noble.on('discover', onDiscoverAsync);
 
     // stop scanning when bluetooth is powered off and start when its on
-    if (Noble.state === 'poweredOn') {
-        startScanning();
-    }
     Noble.on('stateChange', function (state) {
+        console.log(`BT: stateChange -> ${state}`);
         if (state === 'poweredOn') {
-            Noble.stopScanning();
-        } else {
             startScanning();
+        } else {
+            Noble.stopScanning();
         }
     });
 }
 
 function startScanning() {
     setTimeout(function () {
-        Noble.startScanning([SERVICE_UUID], false);
-        console.log('BT: Scanning for tracker...');
+        if (Noble.state === 'poweredOn') {
+            Noble.startScanning([SERVICE_UUID], false);
+            console.log('BT: Scanning for tracker...');
+        }
     }, 500);
 }
 
