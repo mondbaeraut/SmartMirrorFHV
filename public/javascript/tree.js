@@ -156,6 +156,8 @@ class AppleInitializer {
 	}
 }
 
+var paused = false;
+
 function treeInit(timeoutInterval) {
     let container = document.getElementById("treeContainer");
 	let overlay = document.getElementById("overlay");
@@ -175,22 +177,32 @@ function treeInit(timeoutInterval) {
 		.then(stylesJson => new AppleInitializer(stylesJson, container));
 
 	return setInterval( function() {
-		let apples = document.querySelectorAll(".apple:not(.appleFallAnimation)");
-		if (apples.length > 0) {
-			let i = Math.floor(rand(0, apples.length));
-			apples[i].classList.remove("appleReappearAnimation");
-			apples[i].classList.add("appleFallAnimation");
-			postAppleLeaves();
-		} else {
-			let leaves = document.querySelectorAll(".leaf:not(.leafFallAnimation)");
-			if(leaves.length > 0) {
-				let i = Math.round(rand(0, leaves.length));
-				leaves[i].classList.remove("leafReappearAnimation");
-				leaves[i].classList.add("leafFallAnimation");
-				postCurrentLeaves();
+		if (!paused) {
+			let apples = document.querySelectorAll(".apple:not(.appleFallAnimation)");
+			if (apples.length > 0) {
+				let i = Math.floor(rand(0, apples.length));
+				apples[i].classList.remove("appleReappearAnimation");
+				apples[i].classList.add("appleFallAnimation");
+				postAppleLeaves();
+			} else {
+				let leaves = document.querySelectorAll(".leaf:not(.leafFallAnimation)");
+				if(leaves.length > 0) {
+					let i = Math.round(rand(0, leaves.length));
+					leaves[i].classList.remove("leafReappearAnimation");
+					leaves[i].classList.add("leafFallAnimation");
+					postCurrentLeaves();
+				}
 			}
 		}
 	}, timeoutInterval);
+}
+
+function treePause() {
+	paused = true;
+}
+
+function treeResume() {
+	paused = false;
 }
 
 function rand(min, max) {

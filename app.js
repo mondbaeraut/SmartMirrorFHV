@@ -13,9 +13,19 @@ app.use(express.static(__dirname + '/public'));
 
 let currentProximity;
 proximity.on('change', data => currentProximity = data);
-app.use(express.Router().get('/proximity', (req, res) => {
+let router = express.Router();
+router.get('/proximity', (req, res) => {
     res.json(currentProximity);
-}));
+});
+router.post('/pause', (req, res) => {
+    sockets.forEach(socket => socket.emit("stop"));
+    res.end();
+});
+router.post('/resume', (req, res) => {
+    sockets.forEach(socket => socket.emit("start"));
+    res.end();
+});
+app.use(router);
 
 const sockets = [];
 io.on('connection', async function (socket) {

@@ -13,6 +13,8 @@ function start() {
     const socket = io();
     socket.on("reset", onReset);
     socket.on("steps", onSteps);
+    socket.on("stop", treePause);
+    socket.on("start", treeResume);
     socket.on("connect", () => console.log("Socket connected."));
     socket.on("disconnect", reason => console.log("Socket disconnected.", reason));
     socket.on("data", data => console.log(data));
