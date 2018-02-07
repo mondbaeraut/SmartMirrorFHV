@@ -1,4 +1,5 @@
-let SerialPort = require("serialport");
+const SerialPort = require("serialport");
+const { EventEmitter } = require('events');
 
 let port = new SerialPort("/dev/ttyACM0", error => {
     if (error) {
@@ -6,13 +7,11 @@ let port = new SerialPort("/dev/ttyACM0", error => {
     }
 });
 
-let callbacks = [];
+const emitter = new EventEmitter();
 
 port.on("data", data => {
     console.log(`Proximity: ${data}`)
-    callbacks.forEach(callback => callback());
+    emitter.emit('change', data);
 });
 
-module.exports.onProximityChange = function(callback) {
-    callbacks.push(callback);
-}
+module.exports = emitter;
